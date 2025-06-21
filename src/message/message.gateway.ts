@@ -91,32 +91,6 @@ export class MessageGateway
       client.broadcast.emit('receiveMessage', savedMessage);
     }
 
-    // if (data.chatType === 'personal') {
-    //   for (const [socketId, userId] of this.connectedUsers.entries()) {
-    //     if (userId === data.receiver) {
-    //       client.to(socketId).emit('receiveMessage', savedMessage);
-    //     }
-    //   }
-    // } else if (data.chatType === 'group') {
-    //   const group = await this.groupService.findOne(data.receiver);
-    //   if (savedMessage.visibility === 'public') {
-    //     for (const [socketId, userId] of this.connectedUsers.entries()) {
-    //       if (
-    //         group.members.includes(userId) &&
-    //         userId !== senderUser._id.toString()
-    //       ) {
-    //         client.to(socketId).emit('receiveMessage', savedMessage);
-    //       }
-    //     }
-    //   } else {
-    //     for (const [socketId, userId] of this.connectedUsers.entries()) {
-    //       if (userId === group.createdBy.toString()) {
-    //         client.to(socketId).emit('receiveMessage', savedMessage);
-    //       }
-    //     }
-    //   }
-    // }
-
     client.emit('messageSent', savedMessage);
   }
 }

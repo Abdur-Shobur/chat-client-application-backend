@@ -90,7 +90,9 @@ async function bootstrap() {
    * **** */
 
   // Start the server
-  await app.listen(configService.port);
+  const port =configService.port || 3000;
+  await app.listen(port, '0.0.0.0');
+
 
   // Log the server URL
   console.log('run at=> ' + ((await app.getUrl()) + '/api'));

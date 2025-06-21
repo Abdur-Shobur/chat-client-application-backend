@@ -1,0 +1,21 @@
+[{
+  "_id": {
+    "$oid": "67b2c9fc32c98e2ba9cce8d2"
+  },
+  "name": "admin",
+  "phone": "123123321",
+  "email": "admin@gmail.com",
+  "password": "$2b$09$TMnF.XlWKxiJHJr1ZNErPOdHAip30Va2qbc2ACZ3stK/shqZTJyMS",
+  "role": {
+    "$oid": "67b2c25d6b596336d2a471bf"
+  },
+  "position": 0,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T05:32:44.013Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T05:32:44.013Z"
+  },
+  "__v": 0
+}]

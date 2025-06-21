@@ -1,0 +1,13 @@
+[{
+  "_id": {
+    "$oid": "67b2c98c32c98e2ba9cce8cb"
+  },
+  "default_user_role": "67b2c25d6b596336d2a471bf",
+  "createdAt": {
+    "$date": "2025-02-17T05:30:52.940Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T05:30:52.940Z"
+  },
+  "__v": 0
+}]

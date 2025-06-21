@@ -1,0 +1,369 @@
+[{
+  "_id": {
+    "$oid": "67b2c25d6b596336d2a471bf"
+  },
+  "name": "User",
+  "permissions": [
+    {
+      "$oid": "67b2b574083159ac42cdb5b4"
+    }
+  ],
+  "description": "string",
+  "position": 1,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T05:00:13.358Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T05:00:13.358Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2c2d26b596336d2a471c8"
+  },
+  "name": "Admin",
+  "permissions": [
+    {
+      "$oid": "67b2b574083159ac42cdb5b4"
+    },
+    {
+      "$oid": "67b2b5a0083159ac42cdb5bf"
+    },
+    {
+      "$oid": "67b2b5b0083159ac42cdb5c7"
+    },
+    {
+      "$oid": "67b2b5b4083159ac42cdb5cc"
+    },
+    {
+      "$oid": "67b2b5b7083159ac42cdb5d1"
+    },
+    {
+      "$oid": "67b2b5ba083159ac42cdb5d6"
+    },
+    {
+      "$oid": "67b2b5ce083159ac42cdb5de"
+    },
+    {
+      "$oid": "67b2b5d9083159ac42cdb5e6"
+    },
+    {
+      "$oid": "67b2b5de083159ac42cdb5eb"
+    },
+    {
+      "$oid": "67b2b5e5083159ac42cdb5f0"
+    },
+    {
+      "$oid": "67b2b5ea083159ac42cdb5f5"
+    },
+    {
+      "$oid": "67b2b5ed083159ac42cdb5fa"
+    },
+    {
+      "$oid": "67b2b5fc083159ac42cdb602"
+    },
+    {
+      "$oid": "67b2b600083159ac42cdb607"
+    },
+    {
+      "$oid": "67b2b602083159ac42cdb60c"
+    },
+    {
+      "$oid": "67b2b604083159ac42cdb611"
+    },
+    {
+      "$oid": "67b2b607083159ac42cdb616"
+    },
+    {
+      "$oid": "67b2b60a083159ac42cdb61b"
+    },
+    {
+      "$oid": "67b2b63d083159ac42cdb62d"
+    },
+    {
+      "$oid": "67b2b647083159ac42cdb632"
+    },
+    {
+      "$oid": "67b2b649083159ac42cdb637"
+    },
+    {
+      "$oid": "67b2b64b083159ac42cdb63c"
+    },
+    {
+      "$oid": "67b2b64f083159ac42cdb641"
+    },
+    {
+      "$oid": "67b2b651083159ac42cdb646"
+    },
+    {
+      "$oid": "67b2b663083159ac42cdb64e"
+    },
+    {
+      "$oid": "67b2b666083159ac42cdb653"
+    },
+    {
+      "$oid": "67b2b685083159ac42cdb660"
+    },
+    {
+      "$oid": "67b2b68b083159ac42cdb665"
+    },
+    {
+      "$oid": "67b2b68e083159ac42cdb66a"
+    },
+    {
+      "$oid": "67b2b692083159ac42cdb66f"
+    },
+    {
+      "$oid": "67b2b698083159ac42cdb674"
+    },
+    {
+      "$oid": "67b2b69c083159ac42cdb679"
+    },
+    {
+      "$oid": "67b2b6b8083159ac42cdb684"
+    },
+    {
+      "$oid": "67b2b6bc083159ac42cdb689"
+    },
+    {
+      "$oid": "67b2b6c0083159ac42cdb68e"
+    },
+    {
+      "$oid": "67b2b6c3083159ac42cdb693"
+    },
+    {
+      "$oid": "67b2b6c7083159ac42cdb698"
+    },
+    {
+      "$oid": "67b2b6ca083159ac42cdb69d"
+    },
+    {
+      "$oid": "67b2b6df083159ac42cdb6a2"
+    },
+    {
+      "$oid": "67b2b6e3083159ac42cdb6a7"
+    },
+    {
+      "$oid": "67b2b6e7083159ac42cdb6ac"
+    },
+    {
+      "$oid": "67b2b6ea083159ac42cdb6b1"
+    },
+    {
+      "$oid": "67b2b6ec083159ac42cdb6b6"
+    },
+    {
+      "$oid": "67b2b6ef083159ac42cdb6bb"
+    },
+    {
+      "$oid": "67b2b702083159ac42cdb6c3"
+    },
+    {
+      "$oid": "67b2b706083159ac42cdb6c8"
+    },
+    {
+      "$oid": "67b2b708083159ac42cdb6cd"
+    },
+    {
+      "$oid": "67b2b70b083159ac42cdb6d2"
+    },
+    {
+      "$oid": "67b2b70e083159ac42cdb6d7"
+    },
+    {
+      "$oid": "67b2b711083159ac42cdb6dc"
+    },
+    {
+      "$oid": "67b2b725083159ac42cdb6e7"
+    },
+    {
+      "$oid": "67b2b728083159ac42cdb6ec"
+    },
+    {
+      "$oid": "67b2b72a083159ac42cdb6f1"
+    },
+    {
+      "$oid": "67b2b72d083159ac42cdb6f6"
+    },
+    {
+      "$oid": "67b2b731083159ac42cdb6fb"
+    },
+    {
+      "$oid": "67b2b733083159ac42cdb700"
+    },
+    {
+      "$oid": "67b2b741083159ac42cdb708"
+    },
+    {
+      "$oid": "67b2b744083159ac42cdb70d"
+    },
+    {
+      "$oid": "67b2b753083159ac42cdb715"
+    },
+    {
+      "$oid": "67b2b756083159ac42cdb71a"
+    },
+    {
+      "$oid": "67b2b758083159ac42cdb71f"
+    },
+    {
+      "$oid": "67b2b75a083159ac42cdb724"
+    },
+    {
+      "$oid": "67b2b75c083159ac42cdb729"
+    },
+    {
+      "$oid": "67b2b75f083159ac42cdb72e"
+    },
+    {
+      "$oid": "67b2b781083159ac42cdb739"
+    },
+    {
+      "$oid": "67b2b787083159ac42cdb73e"
+    },
+    {
+      "$oid": "67b2b78a083159ac42cdb743"
+    },
+    {
+      "$oid": "67b2b78f083159ac42cdb748"
+    },
+    {
+      "$oid": "67b2b792083159ac42cdb74d"
+    },
+    {
+      "$oid": "67b2b795083159ac42cdb752"
+    },
+    {
+      "$oid": "67b2b7a3083159ac42cdb757"
+    },
+    {
+      "$oid": "67b2b7a7083159ac42cdb75c"
+    },
+    {
+      "$oid": "67b2b7aa083159ac42cdb761"
+    },
+    {
+      "$oid": "67b2b7ac083159ac42cdb766"
+    },
+    {
+      "$oid": "67b2b7b0083159ac42cdb76b"
+    },
+    {
+      "$oid": "67b2b7b5083159ac42cdb770"
+    },
+    {
+      "$oid": "67b2b7c9083159ac42cdb778"
+    },
+    {
+      "$oid": "67b2b7cf083159ac42cdb77d"
+    },
+    {
+      "$oid": "67b2b7d1083159ac42cdb782"
+    },
+    {
+      "$oid": "67b2b7d8083159ac42cdb787"
+    },
+    {
+      "$oid": "67b2b7db083159ac42cdb78c"
+    },
+    {
+      "$oid": "67b2b7dd083159ac42cdb791"
+    },
+    {
+      "$oid": "67b2b7f0083159ac42cdb799"
+    },
+    {
+      "$oid": "67b2b7f3083159ac42cdb79e"
+    },
+    {
+      "$oid": "67b2b814083159ac42cdb7a6"
+    },
+    {
+      "$oid": "67b2b826083159ac42cdb7ab"
+    },
+    {
+      "$oid": "67b2b831083159ac42cdb7b0"
+    },
+    {
+      "$oid": "67b2b83b083159ac42cdb7b5"
+    },
+    {
+      "$oid": "67b2b84b083159ac42cdb7ba"
+    },
+    {
+      "$oid": "67b2b865083159ac42cdb7bf"
+    },
+    {
+      "$oid": "67b2b889083159ac42cdb7c7"
+    },
+    {
+      "$oid": "67b2b88d083159ac42cdb7cc"
+    },
+    {
+      "$oid": "67b2b88f083159ac42cdb7d1"
+    },
+    {
+      "$oid": "67b2b894083159ac42cdb7db"
+    },
+    {
+      "$oid": "67b2b898083159ac42cdb7e0"
+    },
+    {
+      "$oid": "67b2b89c083159ac42cdb7e5"
+    },
+    {
+      "$oid": "67b2b8b5083159ac42cdb7ed"
+    },
+    {
+      "$oid": "67b2b8b9083159ac42cdb7f2"
+    },
+    {
+      "$oid": "67b2b8bc083159ac42cdb7f7"
+    },
+    {
+      "$oid": "67b2b8bf083159ac42cdb7fc"
+    },
+    {
+      "$oid": "67b2b8c4083159ac42cdb801"
+    },
+    {
+      "$oid": "67b2b8c8083159ac42cdb806"
+    },
+    {
+      "$oid": "67b2b924083159ac42cdb817"
+    },
+    {
+      "$oid": "67b2b927083159ac42cdb81c"
+    },
+    {
+      "$oid": "67b2b929083159ac42cdb821"
+    },
+    {
+      "$oid": "67b2b92c083159ac42cdb826"
+    },
+    {
+      "$oid": "67b2b92e083159ac42cdb82b"
+    },
+    {
+      "$oid": "67b2b931083159ac42cdb830"
+    },
+    {
+      "$oid": "67b2b946083159ac42cdb838"
+    },
+    {
+      "$oid": "67b2b949083159ac42cdb83d"
+    }
+  ],
+  "description": "string",
+  "position": 2,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T05:02:10.808Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T05:02:10.808Z"
+  },
+  "__v": 0
+}]

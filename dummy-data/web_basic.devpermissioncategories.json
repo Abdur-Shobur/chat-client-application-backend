@@ -1,0 +1,336 @@
+[{
+  "_id": {
+    "$oid": "67b2b3b2083159ac42cdb541"
+  },
+  "name": "Blog",
+  "permissionKey": "blog",
+  "position": 1,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T03:57:38.656Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T03:57:38.656Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b3d4083159ac42cdb547"
+  },
+  "name": "Blog Category",
+  "permissionKey": "blog_category",
+  "position": 2,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T03:58:12.083Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T03:58:12.083Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b3e2083159ac42cdb54c"
+  },
+  "name": "Brand",
+  "permissionKey": "brand",
+  "position": 3,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T03:58:26.903Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T03:58:26.903Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b3ea083159ac42cdb550"
+  },
+  "name": "Category",
+  "permissionKey": "category",
+  "position": 4,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T03:58:34.465Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:08:15.121Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b406083159ac42cdb555"
+  },
+  "name": "Contact Us",
+  "permissionKey": "contact_us",
+  "position": 5,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T03:59:02.570Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T03:59:02.570Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b416083159ac42cdb55a"
+  },
+  "name": "Dynamic Section",
+  "permissionKey": "dynamic_section",
+  "position": 6,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T03:59:18.466Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T03:59:18.466Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b421083159ac42cdb55f"
+  },
+  "name": "Faq",
+  "permissionKey": "faq",
+  "position": 7,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T03:59:29.130Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T03:59:29.130Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b42c083159ac42cdb564"
+  },
+  "name": "Menu",
+  "permissionKey": "menu",
+  "position": 8,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T03:59:40.567Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T03:59:40.567Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b431083159ac42cdb568"
+  },
+  "name": "Review",
+  "permissionKey": "review",
+  "position": 9,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T03:59:45.870Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T03:59:45.870Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b437083159ac42cdb56c"
+  },
+  "name": "Role",
+  "permissionKey": "role",
+  "position": 10,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T03:59:51.885Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T03:59:51.885Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b45d083159ac42cdb572"
+  },
+  "name": "Site Setting",
+  "permissionKey": "site_setting",
+  "position": 11,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:00:29.250Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:00:29.250Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b462083159ac42cdb576"
+  },
+  "name": "Social",
+  "permissionKey": "social",
+  "position": 12,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:00:34.586Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:00:34.586Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b465083159ac42cdb57a"
+  },
+  "name": "Tag",
+  "permissionKey": "tag",
+  "position": 13,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:00:37.743Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:00:37.743Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b47c083159ac42cdb57f"
+  },
+  "name": "Testimonial",
+  "permissionKey": "testimonial",
+  "position": 14,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:01:00.669Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:01:00.669Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b484083159ac42cdb583"
+  },
+  "name": "User",
+  "permissionKey": "user",
+  "position": 15,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:01:08.043Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:01:08.043Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b48d083159ac42cdb587"
+  },
+  "name": "About Us",
+  "permissionKey": "about_us",
+  "position": 16,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:01:17.895Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:01:17.895Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b492083159ac42cdb58b"
+  },
+  "name": "Auth",
+  "permissionKey": "auth",
+  "position": 17,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:01:22.284Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:01:22.284Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b4bd083159ac42cdb590"
+  },
+  "name": "Dev Permission",
+  "permissionKey": "dev_permission",
+  "position": 18,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:02:05.427Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:02:05.427Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b4c8083159ac42cdb595"
+  },
+  "name": "Permission Item",
+  "permissionKey": "permission_item",
+  "position": 19,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:02:16.744Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:02:37.852Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b51c083159ac42cdb5a5"
+  },
+  "name": "Sub Category",
+  "permissionKey": "sub_category",
+  "position": 20,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:03:40.117Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:03:40.117Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b525083159ac42cdb5a9"
+  },
+  "name": "Global Setting",
+  "permissionKey": "global_setting",
+  "position": 21,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:03:49.179Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:03:49.179Z"
+  },
+  "__v": 0
+}]

@@ -1,0 +1,2090 @@
+[{
+  "_id": {
+    "$oid": "67b2b574083159ac42cdb5b4"
+  },
+  "name": "Blog All",
+  "category": {
+    "$oid": "67b2b3b2083159ac42cdb541"
+  },
+  "permissionKey": "blog_all",
+  "position": 1,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:05:08.369Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:05:08.369Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b5a0083159ac42cdb5bf"
+  },
+  "name": "Blog Create",
+  "category": {
+    "$oid": "67b2b3b2083159ac42cdb541"
+  },
+  "permissionKey": "blog_create",
+  "position": 2,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:05:52.164Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:05:52.164Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b5b0083159ac42cdb5c7"
+  },
+  "name": "Blog View",
+  "category": {
+    "$oid": "67b2b3b2083159ac42cdb541"
+  },
+  "permissionKey": "blog_view",
+  "position": 3,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:06:08.136Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:06:08.136Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b5b4083159ac42cdb5cc"
+  },
+  "name": "Blog Update",
+  "category": {
+    "$oid": "67b2b3b2083159ac42cdb541"
+  },
+  "permissionKey": "blog_update",
+  "position": 4,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:06:12.452Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:06:12.452Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b5b7083159ac42cdb5d1"
+  },
+  "name": "Blog Status",
+  "category": {
+    "$oid": "67b2b3b2083159ac42cdb541"
+  },
+  "permissionKey": "blog_status",
+  "position": 5,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:06:15.822Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:06:15.822Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b5ba083159ac42cdb5d6"
+  },
+  "name": "Blog Delete",
+  "category": {
+    "$oid": "67b2b3b2083159ac42cdb541"
+  },
+  "permissionKey": "blog_delete",
+  "position": 6,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:06:18.412Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:06:18.412Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b5ce083159ac42cdb5de"
+  },
+  "name": "Blog Category All",
+  "category": {
+    "$oid": "67b2b3d4083159ac42cdb547"
+  },
+  "permissionKey": "blog_category_all",
+  "position": 7,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:06:38.445Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:06:38.445Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b5d9083159ac42cdb5e6"
+  },
+  "name": "Blog Category Create",
+  "category": {
+    "$oid": "67b2b3d4083159ac42cdb547"
+  },
+  "permissionKey": "blog_category_create",
+  "position": 8,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:06:49.700Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:06:49.700Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b5de083159ac42cdb5eb"
+  },
+  "name": "Blog Category View",
+  "category": {
+    "$oid": "67b2b3d4083159ac42cdb547"
+  },
+  "permissionKey": "blog_category_view",
+  "position": 9,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:06:54.440Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:06:54.440Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b5e5083159ac42cdb5f0"
+  },
+  "name": "Blog Category Update",
+  "category": {
+    "$oid": "67b2b3d4083159ac42cdb547"
+  },
+  "permissionKey": "blog_category_update",
+  "position": 10,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:07:01.835Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:07:01.835Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b5ea083159ac42cdb5f5"
+  },
+  "name": "Blog Category Status",
+  "category": {
+    "$oid": "67b2b3d4083159ac42cdb547"
+  },
+  "permissionKey": "blog_category_status",
+  "position": 11,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:07:06.122Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:07:06.122Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b5ed083159ac42cdb5fa"
+  },
+  "name": "Blog Category Delete",
+  "category": {
+    "$oid": "67b2b3d4083159ac42cdb547"
+  },
+  "permissionKey": "blog_category_delete",
+  "position": 12,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:07:09.462Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:07:09.462Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b5fc083159ac42cdb602"
+  },
+  "name": "Brand All",
+  "category": {
+    "$oid": "67b2b3e2083159ac42cdb54c"
+  },
+  "permissionKey": "brand_all",
+  "position": 13,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:07:25.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:07:25.000Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b600083159ac42cdb607"
+  },
+  "name": "Brand Create",
+  "category": {
+    "$oid": "67b2b3e2083159ac42cdb54c"
+  },
+  "permissionKey": "brand_create",
+  "position": 14,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:07:28.281Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:07:28.281Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b602083159ac42cdb60c"
+  },
+  "name": "Brand View",
+  "category": {
+    "$oid": "67b2b3e2083159ac42cdb54c"
+  },
+  "permissionKey": "brand_view",
+  "position": 15,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:07:30.198Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:07:30.198Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b604083159ac42cdb611"
+  },
+  "name": "Brand Update",
+  "category": {
+    "$oid": "67b2b3e2083159ac42cdb54c"
+  },
+  "permissionKey": "brand_update",
+  "position": 16,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:07:32.347Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:07:32.347Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b607083159ac42cdb616"
+  },
+  "name": "Brand Status",
+  "category": {
+    "$oid": "67b2b3e2083159ac42cdb54c"
+  },
+  "permissionKey": "brand_status",
+  "position": 17,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:07:35.618Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:07:35.618Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b60a083159ac42cdb61b"
+  },
+  "name": "Brand Delete",
+  "category": {
+    "$oid": "67b2b3e2083159ac42cdb54c"
+  },
+  "permissionKey": "brand_delete",
+  "position": 18,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:07:38.340Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:07:38.340Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b63d083159ac42cdb62d"
+  },
+  "name": "Category All",
+  "category": {
+    "$oid": "67b2b3ea083159ac42cdb550"
+  },
+  "permissionKey": "category_all",
+  "position": 19,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:08:29.371Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:08:29.371Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b647083159ac42cdb632"
+  },
+  "name": "Category Create",
+  "category": {
+    "$oid": "67b2b3ea083159ac42cdb550"
+  },
+  "permissionKey": "category_create",
+  "position": 20,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:08:39.134Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:08:39.134Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b649083159ac42cdb637"
+  },
+  "name": "Category View",
+  "category": {
+    "$oid": "67b2b3ea083159ac42cdb550"
+  },
+  "permissionKey": "category_view",
+  "position": 21,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:08:41.354Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:08:41.354Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b64b083159ac42cdb63c"
+  },
+  "name": "Category Update",
+  "category": {
+    "$oid": "67b2b3ea083159ac42cdb550"
+  },
+  "permissionKey": "category_update",
+  "position": 22,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:08:43.547Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:08:43.547Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b64f083159ac42cdb641"
+  },
+  "name": "Category Status",
+  "category": {
+    "$oid": "67b2b3ea083159ac42cdb550"
+  },
+  "permissionKey": "category_status",
+  "position": 23,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:08:47.216Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:08:47.216Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b651083159ac42cdb646"
+  },
+  "name": "Category Delete",
+  "category": {
+    "$oid": "67b2b3ea083159ac42cdb550"
+  },
+  "permissionKey": "category_delete",
+  "position": 24,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:08:49.987Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:08:49.987Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b663083159ac42cdb64e"
+  },
+  "name": "Contact Us All",
+  "category": {
+    "$oid": "67b2b406083159ac42cdb555"
+  },
+  "permissionKey": "contact_us_all",
+  "position": 25,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:09:07.107Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:09:07.107Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b666083159ac42cdb653"
+  },
+  "name": "Contact Us Update",
+  "category": {
+    "$oid": "67b2b406083159ac42cdb555"
+  },
+  "permissionKey": "contact_us_update",
+  "position": 26,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:09:10.155Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:09:10.155Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b685083159ac42cdb660"
+  },
+  "name": "Dynamic Section All",
+  "category": {
+    "$oid": "67b2b416083159ac42cdb55a"
+  },
+  "permissionKey": "dynamic_section_all",
+  "position": 28,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:09:41.884Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:09:41.884Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b68b083159ac42cdb665"
+  },
+  "name": "Dynamic Section Create",
+  "category": {
+    "$oid": "67b2b416083159ac42cdb55a"
+  },
+  "permissionKey": "dynamic_section_create",
+  "position": 29,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:09:47.552Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:09:47.552Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b68e083159ac42cdb66a"
+  },
+  "name": "Dynamic Section View",
+  "category": {
+    "$oid": "67b2b416083159ac42cdb55a"
+  },
+  "permissionKey": "dynamic_section_view",
+  "position": 30,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:09:50.871Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:09:50.871Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b692083159ac42cdb66f"
+  },
+  "name": "Dynamic Section Update",
+  "category": {
+    "$oid": "67b2b416083159ac42cdb55a"
+  },
+  "permissionKey": "dynamic_section_update",
+  "position": 31,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:09:54.909Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:09:54.909Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b698083159ac42cdb674"
+  },
+  "name": "Dynamic Section Status",
+  "category": {
+    "$oid": "67b2b416083159ac42cdb55a"
+  },
+  "permissionKey": "dynamic_section_status",
+  "position": 32,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:10:00.480Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:10:00.480Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b69c083159ac42cdb679"
+  },
+  "name": "Dynamic Section Delete",
+  "category": {
+    "$oid": "67b2b416083159ac42cdb55a"
+  },
+  "permissionKey": "dynamic_section_delete",
+  "position": 33,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:10:04.297Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:10:04.297Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b6b8083159ac42cdb684"
+  },
+  "name": "Faq All",
+  "category": {
+    "$oid": "67b2b421083159ac42cdb55f"
+  },
+  "permissionKey": "faq_all",
+  "position": 33,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:10:32.624Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:10:32.624Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b6bc083159ac42cdb689"
+  },
+  "name": "Faq Create",
+  "category": {
+    "$oid": "67b2b421083159ac42cdb55f"
+  },
+  "permissionKey": "faq_create",
+  "position": 34,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:10:36.139Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:10:36.139Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b6c0083159ac42cdb68e"
+  },
+  "name": "Faq View",
+  "category": {
+    "$oid": "67b2b421083159ac42cdb55f"
+  },
+  "permissionKey": "faq_view",
+  "position": 35,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:10:40.859Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:10:40.859Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b6c3083159ac42cdb693"
+  },
+  "name": "Faq Update",
+  "category": {
+    "$oid": "67b2b421083159ac42cdb55f"
+  },
+  "permissionKey": "faq_update",
+  "position": 36,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:10:43.873Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:10:43.873Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b6c7083159ac42cdb698"
+  },
+  "name": "Faq Status",
+  "category": {
+    "$oid": "67b2b421083159ac42cdb55f"
+  },
+  "permissionKey": "faq_status",
+  "position": 37,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:10:47.516Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:10:47.516Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b6ca083159ac42cdb69d"
+  },
+  "name": "Faq Delete",
+  "category": {
+    "$oid": "67b2b421083159ac42cdb55f"
+  },
+  "permissionKey": "faq_delete",
+  "position": 38,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:10:50.592Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:10:50.592Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b6df083159ac42cdb6a2"
+  },
+  "name": "Menu All",
+  "category": {
+    "$oid": "67b2b42c083159ac42cdb564"
+  },
+  "permissionKey": "menu_all",
+  "position": 39,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:11:11.282Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:11:11.282Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b6e3083159ac42cdb6a7"
+  },
+  "name": "Menu Create",
+  "category": {
+    "$oid": "67b2b42c083159ac42cdb564"
+  },
+  "permissionKey": "menu_create",
+  "position": 40,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:11:15.231Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:11:15.231Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b6e7083159ac42cdb6ac"
+  },
+  "name": "Menu View",
+  "category": {
+    "$oid": "67b2b42c083159ac42cdb564"
+  },
+  "permissionKey": "menu_view",
+  "position": 41,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:11:19.425Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:11:19.425Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b6ea083159ac42cdb6b1"
+  },
+  "name": "Menu Update",
+  "category": {
+    "$oid": "67b2b42c083159ac42cdb564"
+  },
+  "permissionKey": "menu_update",
+  "position": 42,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:11:22.123Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:11:22.123Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b6ec083159ac42cdb6b6"
+  },
+  "name": "Menu Status",
+  "category": {
+    "$oid": "67b2b42c083159ac42cdb564"
+  },
+  "permissionKey": "menu_status",
+  "position": 43,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:11:24.845Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:11:24.845Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b6ef083159ac42cdb6bb"
+  },
+  "name": "Menu Delete",
+  "category": {
+    "$oid": "67b2b42c083159ac42cdb564"
+  },
+  "permissionKey": "menu_delete",
+  "position": 44,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:11:27.290Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:11:27.290Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b702083159ac42cdb6c3"
+  },
+  "name": "Review All",
+  "category": {
+    "$oid": "67b2b431083159ac42cdb568"
+  },
+  "permissionKey": "review_all",
+  "position": 45,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:11:46.539Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:11:46.539Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b706083159ac42cdb6c8"
+  },
+  "name": "Review Create",
+  "category": {
+    "$oid": "67b2b431083159ac42cdb568"
+  },
+  "permissionKey": "review_create",
+  "position": 46,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:11:50.576Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:11:50.576Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b708083159ac42cdb6cd"
+  },
+  "name": "Review View",
+  "category": {
+    "$oid": "67b2b431083159ac42cdb568"
+  },
+  "permissionKey": "review_view",
+  "position": 47,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:11:52.795Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:11:52.795Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b70b083159ac42cdb6d2"
+  },
+  "name": "Review Update",
+  "category": {
+    "$oid": "67b2b431083159ac42cdb568"
+  },
+  "permissionKey": "review_update",
+  "position": 48,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:11:55.581Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:11:55.581Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b70e083159ac42cdb6d7"
+  },
+  "name": "Review Status",
+  "category": {
+    "$oid": "67b2b431083159ac42cdb568"
+  },
+  "permissionKey": "review_status",
+  "position": 49,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:11:58.760Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:11:58.760Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b711083159ac42cdb6dc"
+  },
+  "name": "Review Delete",
+  "category": {
+    "$oid": "67b2b431083159ac42cdb568"
+  },
+  "permissionKey": "review_delete",
+  "position": 50,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:12:01.230Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:12:01.230Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b725083159ac42cdb6e7"
+  },
+  "name": "Role All",
+  "category": {
+    "$oid": "67b2b437083159ac42cdb56c"
+  },
+  "permissionKey": "role_all",
+  "position": 51,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:12:21.716Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:12:21.716Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b728083159ac42cdb6ec"
+  },
+  "name": "Role Create",
+  "category": {
+    "$oid": "67b2b437083159ac42cdb56c"
+  },
+  "permissionKey": "role_create",
+  "position": 52,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:12:24.756Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:12:24.756Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b72a083159ac42cdb6f1"
+  },
+  "name": "Role View",
+  "category": {
+    "$oid": "67b2b437083159ac42cdb56c"
+  },
+  "permissionKey": "role_view",
+  "position": 53,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:12:26.785Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:12:26.785Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b72d083159ac42cdb6f6"
+  },
+  "name": "Role Update",
+  "category": {
+    "$oid": "67b2b437083159ac42cdb56c"
+  },
+  "permissionKey": "role_update",
+  "position": 54,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:12:29.939Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:12:29.939Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b731083159ac42cdb6fb"
+  },
+  "name": "Role Status",
+  "category": {
+    "$oid": "67b2b437083159ac42cdb56c"
+  },
+  "permissionKey": "role_status",
+  "position": 55,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:12:33.084Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:12:33.084Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b733083159ac42cdb700"
+  },
+  "name": "Role Delete",
+  "category": {
+    "$oid": "67b2b437083159ac42cdb56c"
+  },
+  "permissionKey": "role_delete",
+  "position": 56,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:12:35.971Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:12:35.971Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b741083159ac42cdb708"
+  },
+  "name": "Site Setting All",
+  "category": {
+    "$oid": "67b2b45d083159ac42cdb572"
+  },
+  "permissionKey": "site_setting_all",
+  "position": 57,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:12:49.573Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:12:49.573Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b744083159ac42cdb70d"
+  },
+  "name": "Site Setting Update",
+  "category": {
+    "$oid": "67b2b45d083159ac42cdb572"
+  },
+  "permissionKey": "site_setting_update",
+  "position": 58,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:12:52.659Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:12:52.659Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b753083159ac42cdb715"
+  },
+  "name": "Social All",
+  "category": {
+    "$oid": "67b2b462083159ac42cdb576"
+  },
+  "permissionKey": "social_all",
+  "position": 59,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:13:07.508Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:13:07.508Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b756083159ac42cdb71a"
+  },
+  "name": "Social Create",
+  "category": {
+    "$oid": "67b2b462083159ac42cdb576"
+  },
+  "permissionKey": "social_create",
+  "position": 60,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:13:10.377Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:13:10.377Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b758083159ac42cdb71f"
+  },
+  "name": "Social View",
+  "category": {
+    "$oid": "67b2b462083159ac42cdb576"
+  },
+  "permissionKey": "social_view",
+  "position": 61,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:13:12.285Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:13:12.285Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b75a083159ac42cdb724"
+  },
+  "name": "Social Update",
+  "category": {
+    "$oid": "67b2b462083159ac42cdb576"
+  },
+  "permissionKey": "social_update",
+  "position": 62,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:13:14.300Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:13:14.300Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b75c083159ac42cdb729"
+  },
+  "name": "Social Status",
+  "category": {
+    "$oid": "67b2b462083159ac42cdb576"
+  },
+  "permissionKey": "social_status",
+  "position": 63,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:13:16.824Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:13:16.824Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b75f083159ac42cdb72e"
+  },
+  "name": "Social Delete",
+  "category": {
+    "$oid": "67b2b462083159ac42cdb576"
+  },
+  "permissionKey": "social_delete",
+  "position": 64,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:13:19.724Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:13:19.724Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b781083159ac42cdb739"
+  },
+  "name": "Tag All",
+  "category": {
+    "$oid": "67b2b465083159ac42cdb57a"
+  },
+  "permissionKey": "tag_all",
+  "position": 65,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:13:53.140Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:13:53.140Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b787083159ac42cdb73e"
+  },
+  "name": "Tag Create",
+  "category": {
+    "$oid": "67b2b465083159ac42cdb57a"
+  },
+  "permissionKey": "tag_create",
+  "position": 66,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:13:59.525Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:13:59.525Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b78a083159ac42cdb743"
+  },
+  "name": "Tag View",
+  "category": {
+    "$oid": "67b2b465083159ac42cdb57a"
+  },
+  "permissionKey": "tag_view",
+  "position": 67,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:14:02.230Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:14:02.230Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b78f083159ac42cdb748"
+  },
+  "name": "Tag Update",
+  "category": {
+    "$oid": "67b2b465083159ac42cdb57a"
+  },
+  "permissionKey": "tag_update",
+  "position": 68,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:14:07.175Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:14:07.175Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b792083159ac42cdb74d"
+  },
+  "name": "Tag Status",
+  "category": {
+    "$oid": "67b2b465083159ac42cdb57a"
+  },
+  "permissionKey": "tag_status",
+  "position": 69,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:14:10.584Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:14:10.584Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b795083159ac42cdb752"
+  },
+  "name": "Tag Delete",
+  "category": {
+    "$oid": "67b2b465083159ac42cdb57a"
+  },
+  "permissionKey": "tag_delete",
+  "position": 70,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:14:13.101Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:14:13.101Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b7a3083159ac42cdb757"
+  },
+  "name": "Testimonial All",
+  "category": {
+    "$oid": "67b2b47c083159ac42cdb57f"
+  },
+  "permissionKey": "testimonial_all",
+  "position": 71,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:14:27.666Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:14:27.666Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b7a7083159ac42cdb75c"
+  },
+  "name": "Testimonial Create",
+  "category": {
+    "$oid": "67b2b47c083159ac42cdb57f"
+  },
+  "permissionKey": "testimonial_create",
+  "position": 72,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:14:31.045Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:14:31.045Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b7aa083159ac42cdb761"
+  },
+  "name": "Testimonial View",
+  "category": {
+    "$oid": "67b2b47c083159ac42cdb57f"
+  },
+  "permissionKey": "testimonial_view",
+  "position": 73,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:14:34.798Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:14:34.798Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b7ac083159ac42cdb766"
+  },
+  "name": "Testimonial Update",
+  "category": {
+    "$oid": "67b2b47c083159ac42cdb57f"
+  },
+  "permissionKey": "testimonial_update",
+  "position": 74,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:14:36.781Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:14:36.781Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b7b0083159ac42cdb76b"
+  },
+  "name": "Testimonial Status",
+  "category": {
+    "$oid": "67b2b47c083159ac42cdb57f"
+  },
+  "permissionKey": "testimonial_status",
+  "position": 75,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:14:40.481Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:14:40.481Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b7b5083159ac42cdb770"
+  },
+  "name": "Testimonial Delete",
+  "category": {
+    "$oid": "67b2b47c083159ac42cdb57f"
+  },
+  "permissionKey": "testimonial_delete",
+  "position": 76,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:14:45.534Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:14:45.534Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b7c9083159ac42cdb778"
+  },
+  "name": "User All",
+  "category": {
+    "$oid": "67b2b484083159ac42cdb583"
+  },
+  "permissionKey": "user_all",
+  "position": 77,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:15:05.597Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:15:05.597Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b7cf083159ac42cdb77d"
+  },
+  "name": "User Create",
+  "category": {
+    "$oid": "67b2b484083159ac42cdb583"
+  },
+  "permissionKey": "user_create",
+  "position": 78,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:15:11.384Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:15:11.384Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b7d1083159ac42cdb782"
+  },
+  "name": "User View",
+  "category": {
+    "$oid": "67b2b484083159ac42cdb583"
+  },
+  "permissionKey": "user_view",
+  "position": 79,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:15:13.737Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:15:13.737Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b7d8083159ac42cdb787"
+  },
+  "name": "User Update",
+  "category": {
+    "$oid": "67b2b484083159ac42cdb583"
+  },
+  "permissionKey": "user_update",
+  "position": 80,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:15:20.256Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:15:20.256Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b7db083159ac42cdb78c"
+  },
+  "name": "User Status",
+  "category": {
+    "$oid": "67b2b484083159ac42cdb583"
+  },
+  "permissionKey": "user_status",
+  "position": 81,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:15:23.354Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:15:23.354Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b7dd083159ac42cdb791"
+  },
+  "name": "User Delete",
+  "category": {
+    "$oid": "67b2b484083159ac42cdb583"
+  },
+  "permissionKey": "user_delete",
+  "position": 82,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:15:25.816Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:15:25.816Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b7f0083159ac42cdb799"
+  },
+  "name": "About Us All",
+  "category": {
+    "$oid": "67b2b48d083159ac42cdb587"
+  },
+  "permissionKey": "about_us_all",
+  "position": 83,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:15:44.260Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:15:44.260Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b7f3083159ac42cdb79e"
+  },
+  "name": "About Us Update",
+  "category": {
+    "$oid": "67b2b48d083159ac42cdb587"
+  },
+  "permissionKey": "about_us_update",
+  "position": 84,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:15:47.797Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:15:47.797Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b814083159ac42cdb7a6"
+  },
+  "name": "Auth Register",
+  "category": {
+    "$oid": "67b2b492083159ac42cdb58b"
+  },
+  "permissionKey": "auth_register",
+  "position": 85,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:16:20.991Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:16:20.991Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b826083159ac42cdb7ab"
+  },
+  "name": "Auth Verify Otp",
+  "category": {
+    "$oid": "67b2b492083159ac42cdb58b"
+  },
+  "permissionKey": "auth_verify_otp",
+  "position": 86,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:16:38.805Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:16:38.805Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b831083159ac42cdb7b0"
+  },
+  "name": "Auth Login",
+  "category": {
+    "$oid": "67b2b492083159ac42cdb58b"
+  },
+  "permissionKey": "auth_login",
+  "position": 87,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:16:49.156Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:16:49.156Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b83b083159ac42cdb7b5"
+  },
+  "name": "Auth Reset Password",
+  "category": {
+    "$oid": "67b2b492083159ac42cdb58b"
+  },
+  "permissionKey": "auth_reset_password",
+  "position": 88,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:16:59.474Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:16:59.474Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b84b083159ac42cdb7ba"
+  },
+  "name": "Auth Reset Password Otp",
+  "category": {
+    "$oid": "67b2b492083159ac42cdb58b"
+  },
+  "permissionKey": "auth_reset_password_otp",
+  "position": 89,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:17:15.380Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:17:15.380Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b865083159ac42cdb7bf"
+  },
+  "name": "Auth Request For Reset Password",
+  "category": {
+    "$oid": "67b2b492083159ac42cdb58b"
+  },
+  "permissionKey": "auth_request_for_reset_password",
+  "position": 90,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:17:41.939Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:17:41.939Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b889083159ac42cdb7c7"
+  },
+  "name": "Dev Permission All",
+  "category": {
+    "$oid": "67b2b4bd083159ac42cdb590"
+  },
+  "permissionKey": "dev_permission_all",
+  "position": 91,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:18:17.492Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:18:17.492Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b88d083159ac42cdb7cc"
+  },
+  "name": "Dev Permission Create",
+  "category": {
+    "$oid": "67b2b4bd083159ac42cdb590"
+  },
+  "permissionKey": "dev_permission_create",
+  "position": 92,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:18:21.664Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:18:21.664Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b88f083159ac42cdb7d1"
+  },
+  "name": "Dev Permission View",
+  "category": {
+    "$oid": "67b2b4bd083159ac42cdb590"
+  },
+  "permissionKey": "dev_permission_view",
+  "position": 93,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:18:23.651Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:18:23.651Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b894083159ac42cdb7db"
+  },
+  "name": "Dev Permission Update",
+  "category": {
+    "$oid": "67b2b4bd083159ac42cdb590"
+  },
+  "permissionKey": "dev_permission_update",
+  "position": 95,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:18:28.557Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:18:28.557Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b898083159ac42cdb7e0"
+  },
+  "name": "Dev Permission Status",
+  "category": {
+    "$oid": "67b2b4bd083159ac42cdb590"
+  },
+  "permissionKey": "dev_permission_status",
+  "position": 96,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:18:32.390Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:18:32.390Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b89c083159ac42cdb7e5"
+  },
+  "name": "Dev Permission Delete",
+  "category": {
+    "$oid": "67b2b4bd083159ac42cdb590"
+  },
+  "permissionKey": "dev_permission_delete",
+  "position": 97,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:18:36.160Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:18:36.160Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b8b5083159ac42cdb7ed"
+  },
+  "name": "Permission Item All",
+  "category": {
+    "$oid": "67b2b4c8083159ac42cdb595"
+  },
+  "permissionKey": "permission_item_all",
+  "position": 98,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:19:01.081Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:19:01.081Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b8b9083159ac42cdb7f2"
+  },
+  "name": "Permission Item Create",
+  "category": {
+    "$oid": "67b2b4c8083159ac42cdb595"
+  },
+  "permissionKey": "permission_item_create",
+  "position": 99,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:19:05.486Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:19:05.486Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b8bc083159ac42cdb7f7"
+  },
+  "name": "Permission Item View",
+  "category": {
+    "$oid": "67b2b4c8083159ac42cdb595"
+  },
+  "permissionKey": "permission_item_view",
+  "position": 100,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:19:08.859Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:19:08.859Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b8bf083159ac42cdb7fc"
+  },
+  "name": "Permission Item Update",
+  "category": {
+    "$oid": "67b2b4c8083159ac42cdb595"
+  },
+  "permissionKey": "permission_item_update",
+  "position": 101,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:19:11.727Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:19:11.727Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b8c4083159ac42cdb801"
+  },
+  "name": "Permission Item Status",
+  "category": {
+    "$oid": "67b2b4c8083159ac42cdb595"
+  },
+  "permissionKey": "permission_item_status",
+  "position": 102,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:19:16.898Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:19:16.898Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b8c8083159ac42cdb806"
+  },
+  "name": "Permission Item Delete",
+  "category": {
+    "$oid": "67b2b4c8083159ac42cdb595"
+  },
+  "permissionKey": "permission_item_delete",
+  "position": 103,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:19:20.518Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:19:20.518Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b924083159ac42cdb817"
+  },
+  "name": "Sub Category All",
+  "category": {
+    "$oid": "67b2b51c083159ac42cdb5a5"
+  },
+  "permissionKey": "sub_category_all",
+  "position": 103,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:20:52.108Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:20:52.108Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b927083159ac42cdb81c"
+  },
+  "name": "Sub Category Create",
+  "category": {
+    "$oid": "67b2b51c083159ac42cdb5a5"
+  },
+  "permissionKey": "sub_category_create",
+  "position": 104,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:20:55.306Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:20:55.306Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b929083159ac42cdb821"
+  },
+  "name": "Sub Category View",
+  "category": {
+    "$oid": "67b2b51c083159ac42cdb5a5"
+  },
+  "permissionKey": "sub_category_view",
+  "position": 105,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:20:57.822Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:20:57.822Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b92c083159ac42cdb826"
+  },
+  "name": "Sub Category Update",
+  "category": {
+    "$oid": "67b2b51c083159ac42cdb5a5"
+  },
+  "permissionKey": "sub_category_update",
+  "position": 106,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:21:00.156Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:21:00.156Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b92e083159ac42cdb82b"
+  },
+  "name": "Sub Category Status",
+  "category": {
+    "$oid": "67b2b51c083159ac42cdb5a5"
+  },
+  "permissionKey": "sub_category_status",
+  "position": 107,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:21:02.766Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:21:02.766Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b931083159ac42cdb830"
+  },
+  "name": "Sub Category Delete",
+  "category": {
+    "$oid": "67b2b51c083159ac42cdb5a5"
+  },
+  "permissionKey": "sub_category_delete",
+  "position": 108,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:21:05.959Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:21:05.959Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b946083159ac42cdb838"
+  },
+  "name": "Global Setting All",
+  "category": {
+    "$oid": "67b2b525083159ac42cdb5a9"
+  },
+  "permissionKey": "global_setting_all",
+  "position": 109,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:21:26.158Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:21:26.158Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67b2b949083159ac42cdb83d"
+  },
+  "name": "Global Setting Update",
+  "category": {
+    "$oid": "67b2b525083159ac42cdb5a9"
+  },
+  "permissionKey": "global_setting_update",
+  "position": 110,
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-02-17T04:21:29.098Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-17T04:21:29.098Z"
+  },
+  "__v": 0
+}]

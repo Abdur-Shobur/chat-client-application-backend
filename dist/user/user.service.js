@@ -103,6 +103,19 @@ let UserService = class UserService {
         })
             .exec();
     }
+    async findByIdOnlyUser(id) {
+        return this.UserModel.findById(id)
+            .select('_id name email phone status role')
+            .populate({
+            path: 'role',
+            select: '_id name permissions',
+            populate: {
+                path: 'permissions',
+                select: '_id name status',
+            },
+        })
+            .exec();
+    }
 };
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([

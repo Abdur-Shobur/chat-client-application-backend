@@ -18,9 +18,13 @@ const message_service_1 = require("./message.service");
 const update_message_dto_1 = require("./dto/update-message.dto");
 const auth_guard_1 = require("../helper/auth-guard");
 const helper_1 = require("../helper");
+const group_service_1 = require("../group/group.service");
+const user_service_1 = require("../user/user.service");
 let MessageController = class MessageController {
-    constructor(messageService) {
+    constructor(messageService, userService, groupService) {
         this.messageService = messageService;
+        this.userService = userService;
+        this.groupService = groupService;
     }
     findAll() {
         return this.messageService.findAll();
@@ -32,7 +36,7 @@ let MessageController = class MessageController {
         return helper_1.ResponseHelper.success(result);
     }
     getChatMessages(req, chatType, targetId) {
-        if (req?.user?.role === 'admin') {
+        if (req?.user?.role?.type === 'admin') {
             return this.messageService.getChatMessagesForAdmin(chatType, req.user._id, targetId);
         }
         else {
@@ -41,6 +45,32 @@ let MessageController = class MessageController {
     }
     findByChat(receiverId) {
         return this.messageService.findByChat(receiverId);
+    }
+    async getChatInfo(id, type) {
+        if (type !== 'group' && type !== 'personal') {
+            return helper_1.ResponseHelper.error('Type is required');
+        }
+        if (type === 'group') {
+            const group = await this.groupService.findOne(id);
+            if (!group) {
+                return helper_1.ResponseHelper.error(`Group with ID ${id} not found`);
+            }
+            return helper_1.ResponseHelper.success({ ...group, type: 'group' }, 'Group info retrieved successfully');
+        }
+        if (type === 'personal') {
+            const user = await this.userService.findByIdOnlyUser(id);
+            if (!user) {
+                return helper_1.ResponseHelper.error(`User with ID ${id} not found`);
+            }
+            return helper_1.ResponseHelper.success({ _id: user._id, name: user.name, role: user.role, type: 'user' }, 'User info retrieved successfully');
+        }
+        return helper_1.ResponseHelper.error('Something went wrong, please try again');
+    }
+    async toggleVisibility(id) {
+        const result = await this.messageService.toggleVisibility(id);
+        if (!result)
+            return helper_1.ResponseHelper.error('Message not found');
+        return helper_1.ResponseHelper.success(result, 'Updated visibility successfully');
     }
     findOne(id) {
         return this.messageService.findOne(id);
@@ -83,6 +113,21 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], MessageController.prototype, "findByChat", null);
 __decorate([
+    (0, common_1.Get)('info/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Query)('type')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], MessageController.prototype, "getChatInfo", null);
+__decorate([
+    (0, common_1.Patch)('toggle-visibility/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], MessageController.prototype, "toggleVisibility", null);
+__decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -107,6 +152,8 @@ __decorate([
 exports.MessageController = MessageController = __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Controller)('messages'),
-    __metadata("design:paramtypes", [message_service_1.MessageService])
+    __metadata("design:paramtypes", [message_service_1.MessageService,
+        user_service_1.UserService,
+        group_service_1.GroupService])
 ], MessageController);
 //# sourceMappingURL=message.controller.js.map

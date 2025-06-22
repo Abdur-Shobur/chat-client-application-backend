@@ -30,26 +30,15 @@ let MessageGateway = class MessageGateway {
         this.jwtService = jwtService;
         this.configService = configService;
         this.connectedUsers = new Map();
-        this.connectedUsersDetailed = new Map();
     }
     afterInit(server) {
-        this.server = server;
         console.log('WebSocket Server Initialized');
         server.use((0, ws_auth_middleware_1.AuthWsMiddleware)(this.jwtService, this.configService, this.userService));
     }
     handleConnection(socket) {
         const user = socket.data.user;
         if (user) {
-            for (const [sockId, userId] of this.connectedUsers.entries()) {
-                if (userId === user._id.toString()) {
-                    const existingSocket = this.server.sockets.sockets.get(sockId);
-                    if (existingSocket && existingSocket.id !== socket.id) {
-                        existingSocket.disconnect();
-                    }
-                }
-            }
             this.connectedUsers.set(socket.id, user._id.toString());
-            this.connectedUsersDetailed.set(socket.id, user);
             console.log(`Client connected: ${socket.id} (userId: ${user._id})`);
         }
         else {
@@ -80,18 +69,8 @@ let MessageGateway = class MessageGateway {
             }
         }
         else if (data.chatType === 'group') {
-            for (const [socketId, user] of this.connectedUsersDetailed.entries()) {
-                if (user._id === senderUser._id)
-                    continue;
-                const isSenderAdmin = senderUser.role?.type === 'admin';
-                const isUserAdmin = user.role?.type === 'admin';
-                if (isSenderAdmin) {
-                    client.to(socketId).emit('receiveMessage', savedMessage);
-                }
-                else if (isUserAdmin) {
-                    client.to(socketId).emit('receiveMessage', savedMessage);
-                }
-            }
+            console.log({ savedMessage });
+            client.broadcast.emit('receiveMessage', savedMessage);
         }
         client.emit('messageSent', savedMessage);
     }
@@ -119,4 +98,4 @@ exports.MessageGateway = MessageGateway = __decorate([
         jwt_1.JwtService,
         config_1.CustomConfigService])
 ], MessageGateway);
-//# sourceMappingURL=message.gateway.js.map
+//# sourceMappingURL=message.gateway-2.ts.js.map

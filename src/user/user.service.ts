@@ -78,6 +78,7 @@ export class UserService {
   // Find user by email
   async findByEmail(email: string): Promise<UserDocument | null> {
     return await this.UserModel.findOne({ email })
+
       .populate({
         path: 'role', // Populate the permissions array
         populate: {
@@ -112,6 +113,20 @@ export class UserService {
           // Populate the category field within permissions
           path: 'permissions', // The field to populate (category)
           select: 'name status permissionKey', // Specify the fields to select from the category model
+        },
+      })
+      .exec();
+  }
+  // Find user by id  Only User
+  async findByIdOnlyUser(id: string): Promise<UserDocument | null> {
+    return this.UserModel.findById(id)
+      .select('_id name email phone status role') // select root user fields
+      .populate({
+        path: 'role',
+        select: '_id name permissions', // only select these fields from Role
+        populate: {
+          path: 'permissions',
+          select: '_id name status', // only these fields from Permission
         },
       })
       .exec();

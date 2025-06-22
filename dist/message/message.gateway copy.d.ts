@@ -13,8 +13,6 @@ export declare class MessageGateway implements OnGatewayInit, OnGatewayConnectio
     private readonly jwtService;
     private readonly configService;
     private connectedUsers;
-    private connectedUsersDetailed;
-    private server;
     constructor(messageService: MessageService, userService: UserService, groupService: GroupService, jwtService: JwtService, configService: CustomConfigService);
     afterInit(server: Server): void;
     handleConnection(socket: Socket): void;

@@ -45,4 +45,5 @@ export declare class UserService {
     findByEmail(email: string): Promise<UserDocument | null>;
     findByPhone(phone: string): Promise<UserDocument | null>;
     findById(id: string): Promise<UserDocument | null>;
+    findByIdOnlyUser(id: string): Promise<UserDocument | null>;
 }

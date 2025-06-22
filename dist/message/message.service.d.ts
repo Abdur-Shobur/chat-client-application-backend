@@ -18,12 +18,12 @@ export declare class MessageService {
         __v: number;
     })[]>;
     getMyInboxList(userId: string): Promise<any[]>;
-    getChatMessagesForAdmin(chatType: 'personal' | 'group', userId: string, targetId: string): Promise<(import("mongoose").Document<unknown, {}, IMessage, {}> & IMessage & Required<{
+    getChatMessages(chatType: 'personal' | 'group', userId: string, targetId: string): Promise<(import("mongoose").Document<unknown, {}, IMessage, {}> & IMessage & Required<{
         _id: Types.ObjectId;
     }> & {
         __v: number;
     })[]>;
-    getChatMessages(chatType: 'personal' | 'group', userId: string, targetId: string): Promise<(import("mongoose").Document<unknown, {}, IMessage, {}> & IMessage & Required<{
+    getChatMessagesForAdmin(chatType: 'personal' | 'group', userId: string, targetId: string): Promise<(import("mongoose").Document<unknown, {}, IMessage, {}> & IMessage & Required<{
         _id: Types.ObjectId;
     }> & {
         __v: number;
@@ -33,6 +33,11 @@ export declare class MessageService {
     }> & {
         __v: number;
     })[]>;
+    toggleVisibility(messageId: string): Promise<import("mongoose").Document<unknown, {}, IMessage, {}> & IMessage & Required<{
+        _id: Types.ObjectId;
+    }> & {
+        __v: number;
+    }>;
     findOne(id: string): Promise<import("mongoose").Document<unknown, {}, IMessage, {}> & IMessage & Required<{
         _id: Types.ObjectId;
     }> & {

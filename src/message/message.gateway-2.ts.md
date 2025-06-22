@@ -26,8 +26,6 @@ export class MessageGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
   private connectedUsers = new Map<string, string>(); // socket.id -> userId
-  private connectedUsersDetailed = new Map<string, any>(); // socket.id -> user object
-  private server: Server; // Add this line
 
   constructor(
     private readonly messageService: MessageService,
@@ -38,28 +36,18 @@ export class MessageGateway
   ) {}
 
   afterInit(server: Server) {
-    this.server = server; // Store the server instance
     console.log('WebSocket Server Initialized');
 
+    // Attach auth middleware
     server.use(
       AuthWsMiddleware(this.jwtService, this.configService, this.userService),
     );
   }
+
   handleConnection(socket: Socket) {
     const user = socket.data.user;
     if (user) {
-      // Disconnect any existing sockets for this user
-      for (const [sockId, userId] of this.connectedUsers.entries()) {
-        if (userId === user._id.toString()) {
-          const existingSocket = this.server.sockets.sockets.get(sockId);
-          if (existingSocket && existingSocket.id !== socket.id) {
-            existingSocket.disconnect();
-          }
-        }
-      }
-
       this.connectedUsers.set(socket.id, user._id.toString());
-      this.connectedUsersDetailed.set(socket.id, user);
       console.log(`Client connected: ${socket.id} (userId: ${user._id})`);
     } else {
       console.warn(`Unauthorized socket tried to connect: ${socket.id}`);
@@ -89,29 +77,18 @@ export class MessageGateway
       sender: senderUser._id,
     });
 
+    // 2. Emit message to receiver(s)
     if (data.chatType === 'personal') {
-      // Personal chat: Send only to receiver
+      // Find socket by userId
       for (const [socketId, userId] of this.connectedUsers.entries()) {
         if (userId === data.receiver) {
           client.to(socketId).emit('receiveMessage', savedMessage);
         }
       }
     } else if (data.chatType === 'group') {
-      // Group chat behavior based on sender's role
-      for (const [socketId, user] of this.connectedUsersDetailed.entries()) {
-        if (user._id === senderUser._id) continue; // Skip sender
-
-        const isSenderAdmin = senderUser.role?.type === 'admin';
-        const isUserAdmin = user.role?.type === 'admin';
-
-        if (isSenderAdmin) {
-          // Admin sends: broadcast to all users except self
-          client.to(socketId).emit('receiveMessage', savedMessage);
-        } else if (isUserAdmin) {
-          // User sends: only admins receive the message
-          client.to(socketId).emit('receiveMessage', savedMessage);
-        }
-      }
+      console.log({ savedMessage });
+      // Broadcast to everyone except sender
+      client.broadcast.emit('receiveMessage', savedMessage);
     }
 
     client.emit('messageSent', savedMessage);

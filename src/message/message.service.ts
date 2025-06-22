@@ -129,11 +129,24 @@ export class MessageService {
             type: '$lastMessage.type',
             createdAt: '$lastMessage.createdAt',
           },
-          userInfo: { $arrayElemAt: ['$userInfo', 0] },
+          userInfo: {
+            $let: {
+              vars: { user: { $arrayElemAt: ['$userInfo', 0] } },
+              in: {
+                _id: '$$user._id',
+                name: '$$user.name',
+                email: '$$user.email',
+                phone: '$$user.phone',
+                role: '$$user.role',
+                status: '$$user.status',
+              },
+            },
+          },
           groupInfo: { $arrayElemAt: ['$groupInfo', 0] },
           participants: '$_id.participants',
         },
       },
+
       {
         $sort: { 'lastMessage.createdAt': -1 },
       },
@@ -194,7 +207,7 @@ export class MessageService {
   //   ]);
   // }
 
-  async getChatMessagesForAdmin(
+  async getChatMessages(
     chatType: 'personal' | 'group',
     userId: string,
     targetId: string,
@@ -235,11 +248,19 @@ export class MessageService {
 
     return this.messageModel
       .find(matchQuery)
-      .sort({ createdAt: 1 })
-      .populate('sender', 'name avatar') // optional
+      .sort({ createdAt: -1 })
+      .populate({
+        path: 'sender',
+        select: 'name role',
+        populate: {
+          path: 'role',
+          select: 'name type',
+        },
+      })
+      .limit(100)
       .exec();
   }
-  async getChatMessages(
+  async getChatMessagesForAdmin(
     chatType: 'personal' | 'group',
     userId: string,
     targetId: string,
@@ -267,12 +288,27 @@ export class MessageService {
     return this.messageModel
       .find(matchQuery)
       .sort({ createdAt: 1 })
-      .populate('sender', 'name avatar') // optional
+      .populate({
+        path: 'sender',
+        select: 'name role',
+        populate: {
+          path: 'role',
+          select: 'name type',
+        },
+      })
+      .limit(100)
       .exec();
   }
 
   findByChat(receiverId: string) {
     return this.messageModel.find({ receiver: receiverId }).exec();
+  }
+
+  async toggleVisibility(messageId: string) {
+    const message = await this.messageModel.findById(messageId);
+    message.visibility = message.visibility === 'public' ? 'private' : 'public';
+    await message.save();
+    return message;
   }
 
   findOne(id: string) {

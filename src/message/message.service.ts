@@ -257,7 +257,7 @@ export class MessageService {
           select: 'name type',
         },
       })
-      .limit(100)
+      .limit(50)
       .exec();
   }
   async getChatMessagesForAdmin(
@@ -296,7 +296,7 @@ export class MessageService {
           select: 'name type',
         },
       })
-      .limit(100)
+      .limit(50)
       .exec();
   }
 

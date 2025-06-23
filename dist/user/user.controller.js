@@ -19,6 +19,8 @@ const helper_1 = require("../helper");
 const auth_guard_1 = require("../helper/auth-guard");
 const decorator_1 = require("../role/decorator");
 const create_user_dto_1 = require("./dto/create-user.dto");
+const update_status_dto_1 = require("./dto/update-status.dto");
+const update_user_dto_1 = require("./dto/update-user.dto");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
@@ -31,11 +33,37 @@ let UserController = class UserController {
         }
         return helper_1.ResponseHelper.success(result);
     }
+    async findOne(id) {
+        const result = await this.userService.findById(id);
+        if (!result)
+            return helper_1.ResponseHelper.error('User not found');
+        return helper_1.ResponseHelper.success(result);
+    }
     async create(createUserDto) {
         const result = await this.userService.create(createUserDto);
         if (!result)
             return helper_1.ResponseHelper.error('User not created');
         return helper_1.ResponseHelper.success(result, 'User created successfully');
+    }
+    async updateStatus(id, updateStatusDto) {
+        const result = await this.userService.updateStatus(id, updateStatusDto.status);
+        console.log(result);
+        if (!result) {
+            return helper_1.ResponseHelper.error('Status not updated');
+        }
+        return helper_1.ResponseHelper.success(result, 'Status updated successfully');
+    }
+    async update(id, updateUserDto) {
+        const result = await this.userService.update(id, updateUserDto);
+        if (!result)
+            return helper_1.ResponseHelper.error('User not updated');
+        return helper_1.ResponseHelper.success(result, 'User updated successfully');
+    }
+    async delete(id) {
+        const result = await this.userService.delete(id);
+        if (!result)
+            return helper_1.ResponseHelper.error('User not deleted');
+        return helper_1.ResponseHelper.success(result, 'User deleted successfully');
     }
 };
 exports.UserController = UserController;
@@ -49,12 +77,42 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "findAll", null);
 __decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "findOne", null);
+__decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "create", null);
+__decorate([
+    (0, common_1.Patch)('status/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, update_status_dto_1.UpdateStatusDto]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "updateStatus", null);
+__decorate([
+    (0, common_1.Put)('update/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, update_user_dto_1.UpdateUserDto]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "update", null);
+__decorate([
+    (0, common_1.Delete)('delete/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "delete", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Controller)('user'),

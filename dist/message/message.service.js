@@ -166,7 +166,7 @@ let MessageService = class MessageService {
                 select: 'name type',
             },
         })
-            .limit(100)
+            .limit(50)
             .exec();
     }
     async getChatMessagesForAdmin(chatType, userId, targetId) {
@@ -199,7 +199,7 @@ let MessageService = class MessageService {
                 select: 'name type',
             },
         })
-            .limit(100)
+            .limit(50)
             .exec();
     }
     findByChat(receiverId) {

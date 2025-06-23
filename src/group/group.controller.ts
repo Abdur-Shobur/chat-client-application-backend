@@ -15,7 +15,6 @@ import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { ResponseHelper } from 'src/helper';
 import { AuthGuard } from 'src/helper/auth-guard';
-import { Role, Roles } from 'src/role/decorator';
 import { UpdateStatusDto } from './dto/update-status.dto'; // Optional, if group has status
 import { JoinGroupDto } from './dto/join-group.dto';
 
@@ -124,6 +123,28 @@ export class GroupController {
     );
     if (!result) return ResponseHelper.error('Status not updated');
     return ResponseHelper.success(result, 'Status updated successfully');
+  }
+
+  @Get('members/:id')
+  async getMembers(@Param('id') id: string) {
+    const result = await this.groupService.getMemberDetails(id);
+    if (!result) return ResponseHelper.error('Members not found');
+    return ResponseHelper.success(result);
+  }
+
+  @Patch('leave/:id')
+  async leaveGroup(@Param('id') id: string, @Req() req: any) {
+    const userId = req.user._id;
+    const result = await this.groupService.leaveGroup(id, userId);
+    if (!result) return ResponseHelper.error('Failed to leave group');
+    return ResponseHelper.success(result, 'Group left successfully');
+  }
+
+  @Patch('remove-member/:id')
+  async removeMember(@Param('id') id: string, @Body() dto: any) {
+    const result = await this.groupService.leaveGroup(id, dto.userId);
+    if (!result) return ResponseHelper.error('Failed to remove group');
+    return ResponseHelper.success(result, 'Member removed successfully');
   }
 
   /**

@@ -67,6 +67,35 @@ export declare class GroupController {
     } & Required<{
         _id: import("mongoose").Types.ObjectId;
     }>>>;
+    getMembers(id: string): Promise<import("../type").IApiResponse<import("mongoose").FlattenMaps<import("mongoose").Document<unknown, {}, import("./schemas/group.schema").Group, {}> & import("./schemas/group.schema").Group & {
+        _id: import("mongoose").Types.ObjectId;
+    } & {
+        __v: number;
+    }> & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }>>>;
+    leaveGroup(id: string, req: any): Promise<import("../type").IApiResponse<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("./schemas/group.schema").Group, {}> & import("./schemas/group.schema").Group & {
+        _id: import("mongoose").Types.ObjectId;
+    } & {
+        __v: number;
+    }, {}> & import("mongoose").Document<unknown, {}, import("./schemas/group.schema").Group, {}> & import("./schemas/group.schema").Group & {
+        _id: import("mongoose").Types.ObjectId;
+    } & {
+        __v: number;
+    } & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }>>>;
+    removeMember(id: string, dto: any): Promise<import("../type").IApiResponse<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("./schemas/group.schema").Group, {}> & import("./schemas/group.schema").Group & {
+        _id: import("mongoose").Types.ObjectId;
+    } & {
+        __v: number;
+    }, {}> & import("mongoose").Document<unknown, {}, import("./schemas/group.schema").Group, {}> & import("./schemas/group.schema").Group & {
+        _id: import("mongoose").Types.ObjectId;
+    } & {
+        __v: number;
+    } & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }>>>;
     remove(id: string): Promise<import("../type").IApiResponse<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("./schemas/group.schema").Group, {}> & import("./schemas/group.schema").Group & {
         _id: import("mongoose").Types.ObjectId;
     } & {

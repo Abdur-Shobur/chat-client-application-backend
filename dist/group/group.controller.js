@@ -80,6 +80,25 @@ let GroupController = class GroupController {
             return helper_1.ResponseHelper.error('Status not updated');
         return helper_1.ResponseHelper.success(result, 'Status updated successfully');
     }
+    async getMembers(id) {
+        const result = await this.groupService.getMemberDetails(id);
+        if (!result)
+            return helper_1.ResponseHelper.error('Members not found');
+        return helper_1.ResponseHelper.success(result);
+    }
+    async leaveGroup(id, req) {
+        const userId = req.user._id;
+        const result = await this.groupService.leaveGroup(id, userId);
+        if (!result)
+            return helper_1.ResponseHelper.error('Failed to leave group');
+        return helper_1.ResponseHelper.success(result, 'Group left successfully');
+    }
+    async removeMember(id, dto) {
+        const result = await this.groupService.leaveGroup(id, dto.userId);
+        if (!result)
+            return helper_1.ResponseHelper.error('Failed to remove group');
+        return helper_1.ResponseHelper.success(result, 'Member removed successfully');
+    }
     async remove(id) {
         const result = await this.groupService.remove(id);
         if (!result)
@@ -141,6 +160,29 @@ __decorate([
     __metadata("design:paramtypes", [String, update_status_dto_1.UpdateStatusDto]),
     __metadata("design:returntype", Promise)
 ], GroupController.prototype, "updateStatus", null);
+__decorate([
+    (0, common_1.Get)('members/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], GroupController.prototype, "getMembers", null);
+__decorate([
+    (0, common_1.Patch)('leave/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], GroupController.prototype, "leaveGroup", null);
+__decorate([
+    (0, common_1.Patch)('remove-member/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], GroupController.prototype, "removeMember", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),

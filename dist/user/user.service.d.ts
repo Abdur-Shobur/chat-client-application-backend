@@ -2,6 +2,7 @@ import { User, UserDocument } from './schemas/user.schema';
 import { Model } from 'mongoose';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
+import { IUserStatus } from './interfaces/user.interfaces';
 export declare class UserService {
     private UserModel;
     constructor(UserModel: Model<UserDocument>);
@@ -46,4 +47,16 @@ export declare class UserService {
     findByPhone(phone: string): Promise<UserDocument | null>;
     findById(id: string): Promise<UserDocument | null>;
     findByIdOnlyUser(id: string): Promise<UserDocument | null>;
+    delete(id: string): Promise<UserDocument | null>;
+    updateStatus(id: string, status: IUserStatus): Promise<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, User, {}> & User & {
+        _id: import("mongoose").Types.ObjectId;
+    } & {
+        __v: number;
+    }, {}> & import("mongoose").Document<unknown, {}, User, {}> & User & {
+        _id: import("mongoose").Types.ObjectId;
+    } & {
+        __v: number;
+    } & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }>>;
 }

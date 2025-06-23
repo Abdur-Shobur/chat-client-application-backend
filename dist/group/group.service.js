@@ -82,8 +82,23 @@ let GroupService = class GroupService {
         }
         return group;
     }
+    async getMemberDetails(id) {
+        const group = await this.groupModel
+            .findById(id)
+            .populate('members', 'name email phone status')
+            .populate('pendingMembers', 'name email phone status')
+            .lean()
+            .exec();
+        if (!group) {
+            throw new common_1.NotFoundException(`Group with ID ${id} not found`);
+        }
+        return group;
+    }
     async updateStatus(id, status) {
         return await this.groupModel.findByIdAndUpdate(id, { status }, { new: true, useFindAndModify: false });
+    }
+    async leaveGroup(id, userId) {
+        return await this.groupModel.findByIdAndUpdate(id, { $pull: { members: userId } }, { new: true, useFindAndModify: false });
     }
     async getMyJoinedGroups(userId) {
         return this.groupModel

@@ -4,6 +4,7 @@ import { User, UserDocument } from './schemas/user.schema';
 import { Model } from 'mongoose';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
+import { IUserStatus } from './interfaces/user.interfaces';
 
 @Injectable()
 export class UserService {
@@ -62,7 +63,7 @@ export class UserService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    return this.UserModel.findByIdAndUpdate(id, updateUserDto, {
+    return await this.UserModel.findByIdAndUpdate(id, updateUserDto, {
       new: true,
     }).exec();
   }
@@ -130,5 +131,21 @@ export class UserService {
         },
       })
       .exec();
+  }
+
+  // delete user by id
+  async delete(id: string): Promise<UserDocument | null> {
+    return await this.UserModel.findByIdAndDelete(id).exec();
+  }
+
+  /**
+   * Update the  Status
+   */
+  async updateStatus(id: string, status: IUserStatus) {
+    return await this.UserModel.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true, useFindAndModify: false }, // `new: true` returns the updated document
+    );
   }
 }

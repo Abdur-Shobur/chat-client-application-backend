@@ -92,10 +92,33 @@ export class GroupService {
     return group;
   }
 
+  async getMemberDetails(id: string) {
+    const group = await this.groupModel
+      .findById(id)
+      .populate('members', 'name email phone status') // Select specific fields
+      .populate('pendingMembers', 'name email phone status') // Optional
+      .lean()
+      .exec();
+
+    if (!group) {
+      throw new NotFoundException(`Group with ID ${id} not found`);
+    }
+
+    return group;
+  }
+
   async updateStatus(id: string, status: 'active' | 'inactive' | 'deleted') {
     return await this.groupModel.findByIdAndUpdate(
       id,
       { status },
+      { new: true, useFindAndModify: false },
+    );
+  }
+
+  async leaveGroup(id: string, userId: string) {
+    return await this.groupModel.findByIdAndUpdate(
+      id,
+      { $pull: { members: userId } },
       { new: true, useFindAndModify: false },
     );
   }

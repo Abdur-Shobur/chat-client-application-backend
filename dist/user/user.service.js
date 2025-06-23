@@ -63,7 +63,7 @@ let UserService = class UserService {
         return result;
     }
     async update(id, updateUserDto) {
-        return this.UserModel.findByIdAndUpdate(id, updateUserDto, {
+        return await this.UserModel.findByIdAndUpdate(id, updateUserDto, {
             new: true,
         }).exec();
     }
@@ -115,6 +115,12 @@ let UserService = class UserService {
             },
         })
             .exec();
+    }
+    async delete(id) {
+        return await this.UserModel.findByIdAndDelete(id).exec();
+    }
+    async updateStatus(id, status) {
+        return await this.UserModel.findByIdAndUpdate(id, { status }, { new: true, useFindAndModify: false });
     }
 };
 exports.UserService = UserService;

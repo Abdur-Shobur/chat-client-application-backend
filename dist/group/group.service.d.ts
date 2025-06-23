@@ -55,7 +55,25 @@ export declare class GroupService {
     } & Required<{
         _id: import("mongoose").Types.ObjectId;
     }>>;
+    getMemberDetails(id: string): Promise<import("mongoose").FlattenMaps<import("mongoose").Document<unknown, {}, Group, {}> & Group & {
+        _id: import("mongoose").Types.ObjectId;
+    } & {
+        __v: number;
+    }> & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }>>;
     updateStatus(id: string, status: 'active' | 'inactive' | 'deleted'): Promise<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, Group, {}> & Group & {
+        _id: import("mongoose").Types.ObjectId;
+    } & {
+        __v: number;
+    }, {}> & import("mongoose").Document<unknown, {}, Group, {}> & Group & {
+        _id: import("mongoose").Types.ObjectId;
+    } & {
+        __v: number;
+    } & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }>>;
+    leaveGroup(id: string, userId: string): Promise<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, Group, {}> & Group & {
         _id: import("mongoose").Types.ObjectId;
     } & {
         __v: number;

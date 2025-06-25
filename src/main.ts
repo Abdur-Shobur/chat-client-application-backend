@@ -83,16 +83,14 @@ async function bootstrap() {
 
   /* ****
    * Uncomment the following 2 lines to run migrations if needed
-
-    const migrationService = app.get(MigrationService);
-    await migrationService.addMissingTypeField();
-
-   * **** */
-
+  
+  const migrationService = app.get(MigrationService);
+  await migrationService.addMissingTypeField();
+  
+  * **** */
   // Start the server
-  const port =configService.port || 3000;
+  const port = configService.port || 3000;
   await app.listen(port, '0.0.0.0');
-
 
   // Log the server URL
   console.log('run at=> ' + ((await app.getUrl()) + '/api'));

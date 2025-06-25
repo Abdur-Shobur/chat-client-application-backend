@@ -37,7 +37,14 @@ let GroupService = class GroupService {
             .exec();
     }
     async findOne(id) {
-        const group = await this.groupModel.findById(id).lean().exec();
+        const group = await this.groupModel
+            .findById(id)
+            .populate({
+            path: 'members',
+            select: '-password',
+        })
+            .lean()
+            .exec();
         if (!group) {
             throw new common_1.NotFoundException(`Group with ID ${id} not found`);
         }
@@ -112,6 +119,45 @@ let GroupService = class GroupService {
             throw new common_1.NotFoundException(`Group with ID ${id} not found`);
         }
         return deleted;
+    }
+    async getUserGroups(userId) {
+        return this.groupModel.aggregate([
+            {
+                $match: {
+                    members: new mongoose_2.Types.ObjectId(userId),
+                },
+            },
+            {
+                $lookup: {
+                    from: 'messages',
+                    let: { groupId: '$_id' },
+                    pipeline: [
+                        { $match: { $expr: { $eq: ['$receiver', '$$groupId'] } } },
+                        { $sort: { createdAt: -1 } },
+                        { $limit: 1 },
+                    ],
+                    as: 'lastMessage',
+                },
+            },
+            {
+                $addFields: {
+                    lastMessage: { $arrayElemAt: ['$lastMessage', 0] },
+                },
+            },
+            {
+                $project: {
+                    _id: 1,
+                    name: 1,
+                    lastMessage: {
+                        text: '$lastMessage.text',
+                        type: '$lastMessage.type',
+                        createdAt: '$lastMessage.createdAt',
+                    },
+                    chatType: { $literal: 'group' },
+                    participants: '$members',
+                },
+            },
+        ]);
     }
 };
 exports.GroupService = GroupService;

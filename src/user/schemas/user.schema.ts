@@ -27,15 +27,16 @@ export class User implements IUser {
   // phone
   @Prop({
     unique: true,
-    required: false,
+    required: true,
     maxlength: [15, 'phone must be at most 15 characters long'],
   })
   phone: string;
 
   //   email
   @Prop({
-    required: true,
-    unique: true,
+    required: false,
+    unique: false,
+    sparse: true,
     // match: [
     //   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     //   'Please enter a valid email address',

@@ -23,7 +23,6 @@ export class Group implements IGroup {
   // description
   @Prop({
     required: false,
-    minlength: [2, 'description must be at least 2 characters long'],
     maxlength: [120, 'description must be at most 120 characters long'],
   })
   description: string;
@@ -31,7 +30,6 @@ export class Group implements IGroup {
   // iconUrl
   @Prop({
     required: false,
-    minlength: [1, 'icon must be at least 1 characters long'],
     maxlength: [120, 'icon must be at most 120 characters long'],
   })
   iconUrl?: string;
@@ -53,7 +51,7 @@ export class Group implements IGroup {
   joinLink?: string;
 
   // joinApprovalType
-  @Prop({ enum: ['auto', 'admin'] })
+  @Prop({ enum: ['auto', 'admin'], default: 'auto' })
   joinApprovalType?: 'auto' | 'admin';
 
   @Prop()
@@ -69,7 +67,7 @@ export class Group implements IGroup {
 
   // pendingMembers
   @Prop({
-    required: true,
+    required: false,
     type: [mongoose.Schema.Types.ObjectId],
     ref: User.name,
   })
@@ -77,7 +75,7 @@ export class Group implements IGroup {
 
   // tags
   @Prop({
-    required: true,
+    required: false,
     type: [mongoose.Schema.Types.ObjectId],
     ref: Tag.name,
   })

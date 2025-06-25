@@ -17,9 +17,15 @@ export class MessageService {
 
   async create(createMessageDto: CreateMessageDto) {
     const message = await this.messageModel.create(createMessageDto);
-    return this.messageModel
-      .findById(message._id)
-      .populate('sender', 'name email phone');
+    return this.messageModel.findById(message._id).populate([
+      { path: 'sender', select: 'name email phone' },
+      {
+        path: 'replyTo',
+        select: 'text type sender',
+        populate: { path: 'sender', select: 'name' },
+      },
+      { path: 'replyToUser', select: 'name' },
+    ]);
   }
 
   // async create(createMessageDto: CreateMessageDto, senderUser: string) {
@@ -60,6 +66,9 @@ export class MessageService {
   findAll() {
     return this.messageModel.find().sort({ createdAt: -1 }).exec();
   }
+
+  /*
+
   async getMyInboxList(userId: string) {
     return this.messageModel.aggregate([
       {
@@ -146,11 +155,153 @@ export class MessageService {
           participants: '$_id.participants',
         },
       },
-
+ 
       {
         $sort: { 'lastMessage.createdAt': -1 },
       },
     ]);
+  }
+  */
+  async getMyInboxList(userId: string) {
+    const userObjectId = new Types.ObjectId(userId);
+
+    // 1. Fetch personal chat threads
+    const personalChats = await this.messageModel.aggregate([
+      {
+        $match: {
+          chatType: 'personal',
+          $or: [{ sender: userObjectId }, { receiver: userObjectId }],
+        },
+      },
+      {
+        $sort: { createdAt: -1 },
+      },
+      {
+        $group: {
+          _id: {
+            chatType: '$chatType',
+            participants: {
+              $cond: {
+                if: { $lt: ['$sender', '$receiver'] },
+                then: ['$sender', '$receiver'],
+                else: ['$receiver', '$sender'],
+              },
+            },
+          },
+          lastMessage: { $first: '$$ROOT' },
+        },
+      },
+      {
+        $addFields: {
+          otherParticipant: {
+            $cond: [
+              { $eq: ['$lastMessage.sender', userObjectId] },
+              '$lastMessage.receiver',
+              '$lastMessage.sender',
+            ],
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'otherParticipant',
+          foreignField: '_id',
+          as: 'userInfo',
+        },
+      },
+      {
+        $project: {
+          chatType: '$lastMessage.chatType',
+          lastMessage: {
+            text: '$lastMessage.text',
+            type: '$lastMessage.type',
+            createdAt: '$lastMessage.createdAt',
+          },
+          userInfo: {
+            $let: {
+              vars: { user: { $arrayElemAt: ['$userInfo', 0] } },
+              in: {
+                _id: '$$user._id',
+                name: '$$user.name',
+                email: '$$user.email',
+                phone: '$$user.phone',
+                role: '$$user.role',
+                status: '$$user.status',
+              },
+            },
+          },
+          groupInfo: null,
+          participants: '$_id.participants',
+        },
+      },
+    ]);
+
+    // 2. Fetch all groups the user belongs to
+    const groupChats = await this.groupModel.aggregate([
+      {
+        $match: { members: userObjectId },
+      },
+      {
+        $lookup: {
+          from: 'messages',
+          let: { groupId: '$_id' },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    { $eq: ['$receiver', '$$groupId'] },
+                    { $eq: ['$chatType', 'group'] },
+                  ],
+                },
+              },
+            },
+            { $sort: { createdAt: -1 } },
+            { $limit: 1 },
+          ],
+          as: 'lastMessage',
+        },
+      },
+      {
+        $addFields: {
+          lastMessage: { $arrayElemAt: ['$lastMessage', 0] },
+        },
+      },
+      {
+        $project: {
+          chatType: { $literal: 'group' },
+          lastMessage: {
+            text: '$lastMessage.text',
+            type: '$lastMessage.type',
+            createdAt: '$lastMessage.createdAt',
+          },
+          userInfo: null,
+          groupInfo: {
+            _id: '$_id',
+            name: '$name',
+            description: '$description',
+            members: '$members',
+          },
+          participants: '$members',
+        },
+      },
+    ]);
+
+    // 3. Combine and sort by latest activity
+    const combinedChats = [...personalChats, ...groupChats];
+
+    combinedChats.sort((a, b) => {
+      const dateA = a.lastMessage?.createdAt
+        ? new Date(a.lastMessage.createdAt).getTime()
+        : 0;
+      const dateB = b.lastMessage?.createdAt
+        ? new Date(b.lastMessage.createdAt).getTime()
+        : 0;
+      return dateB - dateA;
+    });
+
+    return combinedChats;
   }
 
   // async getMyInboxList(userId: string) {
@@ -212,6 +363,9 @@ export class MessageService {
     userId: string,
     targetId: string,
   ) {
+    const userObjectId = new Types.ObjectId(userId);
+    const targetObjectId = new Types.ObjectId(targetId);
+
     const matchQuery =
       chatType === 'personal'
         ? {
@@ -219,47 +373,68 @@ export class MessageService {
             $and: [
               {
                 $or: [
-                  {
-                    sender: new Types.ObjectId(userId),
-                    receiver: new Types.ObjectId(targetId),
-                  },
-                  {
-                    sender: new Types.ObjectId(targetId),
-                    receiver: new Types.ObjectId(userId),
-                  },
+                  { sender: userObjectId, receiver: targetObjectId },
+                  { sender: targetObjectId, receiver: userObjectId },
                 ],
               },
               {
-                $or: [
-                  { sender: new Types.ObjectId(userId) },
-                  { visibility: 'public' },
-                ],
+                $or: [{ sender: userObjectId }, { visibility: 'public' }],
               },
             ],
           }
         : {
             chatType: 'group',
-            receiver: new Types.ObjectId(targetId),
+            receiver: targetObjectId,
             $or: [
-              { sender: new Types.ObjectId(userId) },
-              { visibility: 'public' },
+              { sender: userObjectId },
+              {
+                $and: [
+                  { visibility: 'public' },
+                  {
+                    $or: [
+                      { replyToUser: { $exists: false } },
+                      { replyToUser: null },
+                    ],
+                  },
+                ],
+              },
+              {
+                $and: [{ visibility: 'public' }, { replyToUser: userObjectId }],
+              },
             ],
           };
 
-    return this.messageModel
+    const messages = await this.messageModel
       .find(matchQuery)
       .sort({ createdAt: -1 })
-      .populate({
-        path: 'sender',
-        select: 'name role',
-        populate: {
-          path: 'role',
-          select: 'name type',
+      .populate([
+        {
+          path: 'sender',
+          select: 'name role',
+          populate: {
+            path: 'role',
+            select: 'name type',
+          },
         },
-      })
+        {
+          path: 'replyTo',
+          populate: {
+            path: 'sender',
+            select: 'name',
+          },
+          select: 'text type sender',
+        },
+        {
+          path: 'replyToUser',
+          select: 'name',
+        },
+      ])
       .limit(50)
       .exec();
+
+    return messages.reverse();
   }
+
   async getChatMessagesForAdmin(
     chatType: 'personal' | 'group',
     userId: string,
@@ -285,19 +460,35 @@ export class MessageService {
             receiver: new Types.ObjectId(targetId),
           };
 
-    return this.messageModel
+    const messages = await this.messageModel
       .find(matchQuery)
-      .sort({ createdAt: 1 })
-      .populate({
-        path: 'sender',
-        select: 'name role',
-        populate: {
-          path: 'role',
-          select: 'name type',
+      .sort({ createdAt: -1 })
+      .populate([
+        {
+          path: 'sender',
+          select: 'name role',
+          populate: {
+            path: 'role',
+            select: 'name type',
+          },
         },
-      })
+        {
+          path: 'replyTo',
+          populate: {
+            path: 'sender',
+            select: 'name',
+          },
+          select: 'text type sender',
+        },
+        {
+          path: 'replyToUser',
+          select: 'name',
+        },
+      ])
       .limit(50)
       .exec();
+
+    return messages.reverse();
   }
 
   findByChat(receiverId: string) {

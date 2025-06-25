@@ -72,4 +72,22 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], CreateMessageDto.prototype, "visibility", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'ID of the message being replied to',
+        required: false,
+    }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsMongoId)(),
+    __metadata("design:type", String)
+], CreateMessageDto.prototype, "replyTo", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'ID of the user being replied to (in a group chat)',
+        required: false,
+    }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsMongoId)(),
+    __metadata("design:type", String)
+], CreateMessageDto.prototype, "replyToUser", void 0);
 //# sourceMappingURL=create-message.dto.js.map

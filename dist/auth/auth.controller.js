@@ -32,6 +32,7 @@ const global_setting_service_1 = require("../global-setting/global-setting.servi
 const role_service_1 = require("../role/role.service");
 const auth_login_dto_1 = require("./auth.login.dto");
 const role_interfaces_1 = require("../role/interfaces/role.interfaces");
+const auth_temp_login_dto_1 = require("./auth.temp-login.dto");
 let AuthController = class AuthController {
     constructor(authService, roleService, userService, jwtService, config, otpService, emailService, GlobalSettingService) {
         this.authService = authService;
@@ -154,6 +155,47 @@ let AuthController = class AuthController {
         });
         return helper_1.ResponseHelper.success('Password reset successfully');
     }
+    async temporaryLogin(loginDto) {
+        const { phone, name } = loginDto;
+        let user = await this.userService.findByPhone(phone);
+        if (!user) {
+            const globalSetting = await this.GlobalSettingService.getDefaultRole();
+            const defaultRole = globalSetting?.default_user_role || role_interfaces_1.IRoleType.User;
+            user = await this.userService.create({
+                name,
+                phone,
+                email: '',
+                status: user_interfaces_1.IUserStatus.Active,
+                role: defaultRole,
+                password: 'password',
+            });
+        }
+        const role = await this.roleService.findOne(user.role);
+        if (role.type === role_interfaces_1.IRoleType.Admin) {
+            throw new common_1.HttpException(helper_1.ResponseHelper.error('Admin cannot login without password', common_1.HttpStatus.FORBIDDEN), common_1.HttpStatus.FORBIDDEN);
+        }
+        if (user.status !== user_interfaces_1.IUserStatus.Active) {
+            throw new common_1.HttpException(helper_1.ResponseHelper.error('User is not active', common_1.HttpStatus.FORBIDDEN), common_1.HttpStatus.FORBIDDEN);
+        }
+        const payload = {
+            username: user.name,
+            _id: user._id,
+            role: role.type || role_interfaces_1.IRoleType.User,
+        };
+        const accessToken = this.jwtService.sign(payload);
+        delete user.password;
+        return helper_1.ResponseHelper.success({
+            user: {
+                email: user.email || '',
+                name: user.name,
+                phone: user.phone,
+                status: user.status,
+                role: role.type || role_interfaces_1.IRoleType.User,
+                id: user._id,
+            },
+            accessToken,
+        }, 'Login successful');
+    }
 };
 exports.AuthController = AuthController;
 __decorate([
@@ -219,6 +261,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "resetPassword", null);
+__decorate([
+    (0, common_1.Post)('/temporary-login'),
+    (0, decorator_1.Roles)(decorator_1.Role.AUTH_LOGIN),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [auth_temp_login_dto_1.TempLoginUserDto]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "temporaryLogin", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Controller)('auth'),

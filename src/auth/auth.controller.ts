@@ -25,8 +25,8 @@ import { Role, Roles } from 'src/role/decorator';
 import { GlobalSettingService } from 'src/global-setting/global-setting.service';
 import { RoleService } from 'src/role/role.service';
 import { LoginUserDto } from './auth.login.dto';
-import { RoleType } from 'src/type';
 import { IRoleType } from 'src/role/interfaces/role.interfaces';
+import { TempLoginUserDto } from './auth.temp-login.dto';
 
 @UseGuards(AuthGuard)
 @Controller('auth')
@@ -287,5 +287,72 @@ export class AuthController {
     });
 
     return ResponseHelper.success('Password reset successfully');
+  }
+
+  @Post('/temporary-login')
+  @Roles(Role.AUTH_LOGIN)
+  async temporaryLogin(@Body() loginDto: TempLoginUserDto) {
+    const { phone, name } = loginDto;
+
+    let user = await this.userService.findByPhone(phone);
+
+    if (!user) {
+      // Get default role from global settings
+      const globalSetting = await this.GlobalSettingService.getDefaultRole();
+      const defaultRole = globalSetting?.default_user_role || IRoleType.User;
+
+      // Create new user with phone and name only
+      user = await this.userService.create({
+        name,
+        phone,
+        email: '', // optional if needed
+        status: IUserStatus.Active,
+        role: defaultRole,
+        password: 'password', // optional, or set default value
+      });
+    }
+    const role = await this.roleService.findOne(user.role);
+    if (role.type === IRoleType.Admin) {
+      throw new HttpException(
+        ResponseHelper.error(
+          'Admin cannot login without password',
+          HttpStatus.FORBIDDEN,
+        ),
+        HttpStatus.FORBIDDEN,
+      );
+    }
+
+    if (user.status !== IUserStatus.Active) {
+      throw new HttpException(
+        ResponseHelper.error('User is not active', HttpStatus.FORBIDDEN),
+        HttpStatus.FORBIDDEN,
+      );
+    }
+
+    // Create JWT payload
+    const payload = {
+      username: user.name,
+      _id: user._id,
+      role: role.type || IRoleType.User,
+    };
+    const accessToken = this.jwtService.sign(payload);
+
+    // Remove sensitive data
+    delete user.password;
+
+    return ResponseHelper.success(
+      {
+        user: {
+          email: user.email || '',
+          name: user.name,
+          phone: user.phone,
+          status: user.status,
+          role: role.type || IRoleType.User,
+          id: user._id,
+        },
+        accessToken,
+      },
+      'Login successful',
+    );
   }
 }

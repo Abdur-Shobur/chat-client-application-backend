@@ -7,4 +7,6 @@ export declare class CreateMessageDto {
     fileUrl?: string;
     type: MessageType;
     visibility?: 'public' | 'private';
+    replyTo?: string;
+    replyToUser?: string;
 }

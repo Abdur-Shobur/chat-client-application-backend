@@ -80,19 +80,38 @@ let MessageGateway = class MessageGateway {
             }
         }
         else if (data.chatType === 'group') {
+            const isSenderAdmin = senderUser.role?.type === 'admin';
             for (const [socketId, user] of this.connectedUsersDetailed.entries()) {
                 if (user._id === senderUser._id)
                     continue;
-                const isSenderAdmin = senderUser.role?.type === 'admin';
                 const isUserAdmin = user.role?.type === 'admin';
-                if (isSenderAdmin) {
+                const replyToUserId = typeof savedMessage.replyToUser === 'object' &&
+                    savedMessage.replyToUser?._id?.toString();
+                const isTargetUser = replyToUserId === user._id.toString();
+                const isPublic = savedMessage.visibility === 'public';
+                if (isSenderAdmin && isPublic) {
                     client.to(socketId).emit('receiveMessage', savedMessage);
+                    continue;
                 }
-                else if (isUserAdmin) {
+                if (isSenderAdmin && !isPublic) {
+                    if (isUserAdmin || isTargetUser) {
+                        client.to(socketId).emit('receiveMessage', savedMessage);
+                    }
+                    continue;
+                }
+                if (!isSenderAdmin && isPublic) {
                     client.to(socketId).emit('receiveMessage', savedMessage);
+                    continue;
+                }
+                if (!isSenderAdmin && !isPublic) {
+                    if (isUserAdmin || isTargetUser) {
+                        client.to(socketId).emit('receiveMessage', savedMessage);
+                    }
+                    continue;
                 }
             }
         }
+        client.emit('messageSent', savedMessage);
         client.emit('messageSent', savedMessage);
     }
 };

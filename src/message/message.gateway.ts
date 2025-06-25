@@ -97,6 +97,135 @@ export class MessageGateway
         }
       }
     } else if (data.chatType === 'group') {
+      const isSenderAdmin = senderUser.role?.type === 'admin';
+
+      for (const [socketId, user] of this.connectedUsersDetailed.entries()) {
+        if (user._id === senderUser._id) continue; // Skip sender
+
+        const isUserAdmin = user.role?.type === 'admin';
+
+        const replyToUserId =
+          typeof savedMessage.replyToUser === 'object' &&
+          savedMessage.replyToUser?._id?.toString();
+
+        const isTargetUser = replyToUserId === user._id.toString();
+        const isPublic = savedMessage.visibility === 'public';
+
+        // ✅ Admin public message → everyone gets it
+        if (isSenderAdmin && isPublic) {
+          client.to(socketId).emit('receiveMessage', savedMessage);
+          continue;
+        }
+
+        // ✅ Admin private reply → only to replyToUser + admins
+        if (isSenderAdmin && !isPublic) {
+          if (isUserAdmin || isTargetUser) {
+            client.to(socketId).emit('receiveMessage', savedMessage);
+          }
+          continue;
+        }
+
+        // ✅ User public message → all users
+        if (!isSenderAdmin && isPublic) {
+          client.to(socketId).emit('receiveMessage', savedMessage);
+          continue;
+        }
+
+        // ✅ User private reply → only to replyToUser + admins
+        if (!isSenderAdmin && !isPublic) {
+          if (isUserAdmin || isTargetUser) {
+            client.to(socketId).emit('receiveMessage', savedMessage);
+          }
+          continue;
+        }
+      }
+    }
+
+    client.emit('messageSent', savedMessage);
+
+    client.emit('messageSent', savedMessage);
+  }
+}
+
+/*
+
+else if (data.chatType === 'group') {
+      // Group chat behavior based on sender's role
+      for (const [socketId, user] of this.connectedUsersDetailed.entries()) {
+        if (user._id === senderUser._id) continue; // Skip sender
+
+        if (
+          savedMessage?.replyToUser?._id &&
+          savedMessage?.replyToUser?._id?.toString() === user?._id?.toString()
+        ) {
+          continue;
+        }
+
+        console.log({ savedMessage, user, senderUser });
+        const isSenderAdmin = senderUser.role?.type === 'admin';
+        const isUserAdmin = user.role?.type === 'admin';
+
+        if (isSenderAdmin) {
+          // Admin sends: broadcast to all users except self
+          client.to(socketId).emit('receiveMessage', savedMessage);
+        } else if (isUserAdmin) {
+          // User sends: only admins receive the message
+          client.to(socketId).emit('receiveMessage', savedMessage);
+        }
+      }
+    }
+
+else if (data.chatType === 'group') {
+  const isSenderAdmin = senderUser.role?.type === 'admin';
+
+  for (const [socketId, user] of this.connectedUsersDetailed.entries()) {
+    if (user._id === senderUser._id) continue; // Skip sender
+
+    const isUserAdmin = user.role?.type === 'admin';
+
+    const replyToUserId =
+      typeof savedMessage.replyToUser === 'object'
+        ? savedMessage.replyToUser?._id?.toString()
+        : savedMessage.replyToUser?.toString();
+
+    const isTargetUser = replyToUserId === user._id.toString();
+    const isPublic = savedMessage.visibility === 'public';
+
+    // ✅ Admin public message → everyone gets it
+    if (isSenderAdmin && isPublic) {
+      client.to(socketId).emit('receiveMessage', savedMessage);
+      continue;
+    }
+
+    // ✅ Admin private reply → only to replyToUser + admins
+    if (isSenderAdmin && !isPublic) {
+      if (isUserAdmin || isTargetUser) {
+        client.to(socketId).emit('receiveMessage', savedMessage);
+      }
+      continue;
+    }
+
+    // ✅ User public message → all users
+    if (!isSenderAdmin && isPublic) {
+      client.to(socketId).emit('receiveMessage', savedMessage);
+      continue;
+    }
+
+    // ✅ User private reply → only to replyToUser + admins
+    if (!isSenderAdmin && !isPublic) {
+      if (isUserAdmin || isTargetUser) {
+        client.to(socketId).emit('receiveMessage', savedMessage);
+      }
+      continue;
+    }
+  }
+}
+
+client.emit('messageSent', savedMessage);
+
+
+
+else if (data.chatType === 'group') {
       // Group chat behavior based on sender's role
       for (const [socketId, user] of this.connectedUsersDetailed.entries()) {
         if (user._id === senderUser._id) continue; // Skip sender
@@ -113,7 +242,4 @@ export class MessageGateway
         }
       }
     }
-
-    client.emit('messageSent', savedMessage);
-  }
-}
+*/

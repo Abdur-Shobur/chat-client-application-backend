@@ -28,15 +28,16 @@ __decorate([
 __decorate([
     (0, mongoose_1.Prop)({
         unique: true,
-        required: false,
+        required: true,
         maxlength: [15, 'phone must be at most 15 characters long'],
     }),
     __metadata("design:type", String)
 ], User.prototype, "phone", void 0);
 __decorate([
     (0, mongoose_1.Prop)({
-        required: true,
-        unique: true,
+        required: false,
+        unique: false,
+        sparse: true,
         maxlength: [120, 'email must be at most 120 characters long'],
     }),
     __metadata("design:type", String)

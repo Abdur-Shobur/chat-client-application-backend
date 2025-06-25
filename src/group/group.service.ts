@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Group, GroupDocument } from './schemas/group.schema';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
@@ -31,7 +31,14 @@ export class GroupService {
   }
 
   async findOne(id: string) {
-    const group = await this.groupModel.findById(id).lean().exec();
+    const group = await this.groupModel
+      .findById(id)
+      .populate({
+        path: 'members',
+        select: '-password',
+      })
+      .lean()
+      .exec();
     if (!group) {
       throw new NotFoundException(`Group with ID ${id} not found`);
     }
@@ -137,5 +144,44 @@ export class GroupService {
       throw new NotFoundException(`Group with ID ${id} not found`);
     }
     return deleted;
+  }
+  async getUserGroups(userId: string) {
+    return this.groupModel.aggregate([
+      {
+        $match: {
+          members: new Types.ObjectId(userId),
+        },
+      },
+      {
+        $lookup: {
+          from: 'messages',
+          let: { groupId: '$_id' },
+          pipeline: [
+            { $match: { $expr: { $eq: ['$receiver', '$$groupId'] } } },
+            { $sort: { createdAt: -1 } },
+            { $limit: 1 },
+          ],
+          as: 'lastMessage',
+        },
+      },
+      {
+        $addFields: {
+          lastMessage: { $arrayElemAt: ['$lastMessage', 0] },
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          lastMessage: {
+            text: '$lastMessage.text',
+            type: '$lastMessage.type',
+            createdAt: '$lastMessage.createdAt',
+          },
+          chatType: { $literal: 'group' },
+          participants: '$members',
+        },
+      },
+    ]);
   }
 }

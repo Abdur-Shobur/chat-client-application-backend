@@ -14,4 +14,6 @@ export interface IMessage {
     createdAt?: Date;
     visibility?: 'public' | 'private';
     updatedAt?: Date;
+    replyTo?: Types.ObjectId;
+    replyToUser?: Types.ObjectId;
 }

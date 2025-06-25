@@ -12,6 +12,7 @@ import { GlobalSettingService } from 'src/global-setting/global-setting.service'
 import { RoleService } from 'src/role/role.service';
 import { LoginUserDto } from './auth.login.dto';
 import { IRoleType } from 'src/role/interfaces/role.interfaces';
+import { TempLoginUserDto } from './auth.temp-login.dto';
 export declare class AuthController {
     private readonly authService;
     private readonly roleService;
@@ -22,7 +23,7 @@ export declare class AuthController {
     private readonly emailService;
     private readonly GlobalSettingService;
     constructor(authService: AuthService, roleService: RoleService, userService: UserService, jwtService: JwtService, config: CustomConfigService, otpService: OtpService, emailService: EmailService, GlobalSettingService: GlobalSettingService);
-    create(createUserDto: CreateUserDto): Promise<import("src/type").IApiResponse<{
+    create(createUserDto: CreateUserDto): Promise<import("../type").IApiResponse<{
         user: {
             email: string;
             name: string;
@@ -33,13 +34,13 @@ export declare class AuthController {
         };
         accessToken: string;
     }>>;
-    info(req: any): Promise<import("src/type").IApiResponse<any>>;
+    info(req: any): Promise<import("../type").IApiResponse<any>>;
     resendOtp(req: {
         email: string;
         type: IOtpType;
-    }): Promise<import("src/type").IApiResponse<string>>;
-    verifyOtp(otpData: VerifyOtpDto): Promise<import("src/type").IApiResponse<any>>;
-    login(loginDto: LoginUserDto): Promise<import("src/type").IApiResponse<{
+    }): Promise<import("../type").IApiResponse<string>>;
+    verifyOtp(otpData: VerifyOtpDto): Promise<import("../type").IApiResponse<any>>;
+    login(loginDto: LoginUserDto): Promise<import("../type").IApiResponse<{
         user: {
             email: string;
             name: string;
@@ -50,14 +51,25 @@ export declare class AuthController {
         };
         accessToken: string;
     }>>;
-    requestPasswordReset(email: string): Promise<import("src/type").IApiResponse<string>>;
+    requestPasswordReset(email: string): Promise<import("../type").IApiResponse<string>>;
     verifyResetOtp(otpData: {
         email: string;
         otp: string;
-    }): Promise<import("src/type").IApiResponse<string>>;
+    }): Promise<import("../type").IApiResponse<string>>;
     resetPassword(resetDto: {
         email: string;
         otp: string;
         newPassword: string;
-    }): Promise<import("src/type").IApiResponse<string>>;
+    }): Promise<import("../type").IApiResponse<string>>;
+    temporaryLogin(loginDto: TempLoginUserDto): Promise<import("../type").IApiResponse<{
+        user: {
+            email: string;
+            name: string;
+            phone: string;
+            status: IUserStatus.Active;
+            role: IRoleType.User;
+            id: import("mongoose").Types.ObjectId;
+        };
+        accessToken: string;
+    }>>;
 }

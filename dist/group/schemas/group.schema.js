@@ -30,7 +30,6 @@ __decorate([
 __decorate([
     (0, mongoose_1.Prop)({
         required: false,
-        minlength: [2, 'description must be at least 2 characters long'],
         maxlength: [120, 'description must be at most 120 characters long'],
     }),
     __metadata("design:type", String)
@@ -38,7 +37,6 @@ __decorate([
 __decorate([
     (0, mongoose_1.Prop)({
         required: false,
-        minlength: [1, 'icon must be at least 1 characters long'],
         maxlength: [120, 'icon must be at most 120 characters long'],
     }),
     __metadata("design:type", String)
@@ -60,7 +58,7 @@ __decorate([
     __metadata("design:type", String)
 ], Group.prototype, "joinLink", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ enum: ['auto', 'admin'] }),
+    (0, mongoose_1.Prop)({ enum: ['auto', 'admin'], default: 'auto' }),
     __metadata("design:type", String)
 ], Group.prototype, "joinApprovalType", void 0);
 __decorate([
@@ -77,7 +75,7 @@ __decorate([
 ], Group.prototype, "members", void 0);
 __decorate([
     (0, mongoose_1.Prop)({
-        required: true,
+        required: false,
         type: [mongoose_2.default.Schema.Types.ObjectId],
         ref: user_schema_1.User.name,
     }),
@@ -85,7 +83,7 @@ __decorate([
 ], Group.prototype, "pendingMembers", void 0);
 __decorate([
     (0, mongoose_1.Prop)({
-        required: true,
+        required: false,
         type: [mongoose_2.default.Schema.Types.ObjectId],
         ref: tag_schema_1.Tag.name,
     }),

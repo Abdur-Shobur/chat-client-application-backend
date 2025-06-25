@@ -52,4 +52,20 @@ export class CreateMessageDto {
   })
   @IsOptional()
   visibility?: 'public' | 'private';
+
+  @ApiProperty({
+    description: 'ID of the message being replied to',
+    required: false,
+  })
+  @IsOptional()
+  @IsMongoId()
+  replyTo?: string;
+
+  @ApiProperty({
+    description: 'ID of the user being replied to (in a group chat)',
+    required: false,
+  })
+  @IsOptional()
+  @IsMongoId()
+  replyToUser?: string;
 }

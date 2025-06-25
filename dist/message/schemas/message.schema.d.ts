@@ -1,5 +1,5 @@
-import { Schema } from 'mongoose';
-export declare const MessageSchema: Schema<any, import("mongoose").Model<any, any, any, any, any, any>, {}, {}, {}, {}, {
+import mongoose from 'mongoose';
+export declare const MessageSchema: mongoose.Schema<any, mongoose.Model<any, any, any, any, any, any>, {}, {}, {}, {}, {
     timestamps: true;
 }, {
     createdAt: NativeDate;
@@ -7,38 +7,44 @@ export declare const MessageSchema: Schema<any, import("mongoose").Model<any, an
 } & {
     type: "text" | "file" | "image" | "video" | "audio";
     status: "sent" | "delivered" | "read";
-    sender: import("mongoose").Types.ObjectId;
-    receiver: import("mongoose").Types.ObjectId;
     chatType: "group" | "personal";
+    sender: mongoose.Types.ObjectId;
+    receiver: mongoose.Types.ObjectId;
     visibility: "public" | "private";
     text?: string;
     fileUrl?: string;
-}, import("mongoose").Document<unknown, {}, import("mongoose").FlatRecord<{
+    replyTo?: mongoose.Types.ObjectId;
+    replyToUser?: mongoose.Types.ObjectId;
+}, mongoose.Document<unknown, {}, mongoose.FlatRecord<{
     createdAt: NativeDate;
     updatedAt: NativeDate;
 } & {
     type: "text" | "file" | "image" | "video" | "audio";
     status: "sent" | "delivered" | "read";
-    sender: import("mongoose").Types.ObjectId;
-    receiver: import("mongoose").Types.ObjectId;
     chatType: "group" | "personal";
+    sender: mongoose.Types.ObjectId;
+    receiver: mongoose.Types.ObjectId;
     visibility: "public" | "private";
     text?: string;
     fileUrl?: string;
-}>, {}> & import("mongoose").FlatRecord<{
+    replyTo?: mongoose.Types.ObjectId;
+    replyToUser?: mongoose.Types.ObjectId;
+}>, {}> & mongoose.FlatRecord<{
     createdAt: NativeDate;
     updatedAt: NativeDate;
 } & {
     type: "text" | "file" | "image" | "video" | "audio";
     status: "sent" | "delivered" | "read";
-    sender: import("mongoose").Types.ObjectId;
-    receiver: import("mongoose").Types.ObjectId;
     chatType: "group" | "personal";
+    sender: mongoose.Types.ObjectId;
+    receiver: mongoose.Types.ObjectId;
     visibility: "public" | "private";
     text?: string;
     fileUrl?: string;
+    replyTo?: mongoose.Types.ObjectId;
+    replyToUser?: mongoose.Types.ObjectId;
 }> & {
-    _id: import("mongoose").Types.ObjectId;
+    _id: mongoose.Types.ObjectId;
 } & {
     __v: number;
 }>;

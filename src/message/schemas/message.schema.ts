@@ -1,13 +1,14 @@
-import { Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import {
   MessageType,
   ChatType,
   MessageStatus,
 } from '../interfaces/message.interface';
+import { User } from 'src/user/schemas/user.schema';
 
 export const MessageSchema = new Schema(
   {
-    sender: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    sender: { type: Schema.Types.ObjectId, ref: User.name, required: true },
     receiver: { type: Schema.Types.ObjectId, required: true },
     chatType: {
       type: String,
@@ -21,6 +22,8 @@ export const MessageSchema = new Schema(
       enum: ['text', 'image', 'file', 'video', 'audio'],
       default: 'text',
     },
+    replyTo: { type: mongoose.Schema.Types.ObjectId, ref: 'Message' },
+    replyToUser: { type: mongoose.Schema.Types.ObjectId, ref: User.name },
     status: {
       type: String,
       enum: ['sent', 'delivered', 'read'],

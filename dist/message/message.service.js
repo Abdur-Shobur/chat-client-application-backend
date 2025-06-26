@@ -205,7 +205,10 @@ let MessageService = class MessageService {
                         ],
                     },
                     {
-                        $and: [{ visibility: 'public' }, { replyToUser: userObjectId }],
+                        $and: [
+                            { visibility: 'private' },
+                            { replyToUser: userObjectId },
+                        ],
                     },
                 ],
             };
@@ -234,7 +237,7 @@ let MessageService = class MessageService {
                 select: 'name',
             },
         ])
-            .limit(50)
+            .limit(20)
             .exec();
         return messages.reverse();
     }
@@ -282,7 +285,7 @@ let MessageService = class MessageService {
                 select: 'name',
             },
         ])
-            .limit(50)
+            .limit(20)
             .exec();
         return messages.reverse();
     }

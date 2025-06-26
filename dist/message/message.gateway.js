@@ -74,7 +74,8 @@ let MessageGateway = class MessageGateway {
         });
         if (data.chatType === 'personal') {
             for (const [socketId, userId] of this.connectedUsers.entries()) {
-                if (userId === data.receiver) {
+                const receiverId = savedMessage.receiver.toString();
+                if (userId.toString() === receiverId) {
                     client.to(socketId).emit('receiveMessage', savedMessage);
                 }
             }
@@ -111,7 +112,6 @@ let MessageGateway = class MessageGateway {
                 }
             }
         }
-        client.emit('messageSent', savedMessage);
         client.emit('messageSent', savedMessage);
     }
 };

@@ -398,8 +398,14 @@ export class MessageService {
                   },
                 ],
               },
+              // {
+              //   $and: [{ visibility: 'public' }, { replyToUser: userObjectId }],
+              // },
               {
-                $and: [{ visibility: 'public' }, { replyToUser: userObjectId }],
+                $and: [
+                  { visibility: 'private' },
+                  { replyToUser: userObjectId },
+                ],
               },
             ],
           };
@@ -429,7 +435,7 @@ export class MessageService {
           select: 'name',
         },
       ])
-      .limit(50)
+      .limit(20)
       .exec();
 
     return messages.reverse();
@@ -485,7 +491,7 @@ export class MessageService {
           select: 'name',
         },
       ])
-      .limit(50)
+      .limit(20)
       .exec();
 
     return messages.reverse();

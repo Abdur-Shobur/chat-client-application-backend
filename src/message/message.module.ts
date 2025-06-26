@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MessageService } from './message.service';
 import { MessageController } from './message.controller';
@@ -13,9 +13,9 @@ import { UserModule } from 'src/user/user.module';
   imports: [
     MongooseModule.forFeature([
       { name: 'Message', schema: MessageSchema },
-      { name: Group.name, schema: GroupSchema }, // ✅ Add this line
+      { name: Group.name, schema: GroupSchema },
     ]),
-    GroupModule,
+    forwardRef(() => GroupModule),
     UserModule,
   ],
   controllers: [MessageController],

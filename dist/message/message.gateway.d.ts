@@ -20,4 +20,8 @@ export declare class MessageGateway implements OnGatewayInit, OnGatewayConnectio
     handleConnection(socket: Socket): void;
     handleDisconnect(socket: Socket): void;
     handleSendMessage(data: CreateMessageDto, client: Socket): Promise<void>;
+    handleToggleVisibility(data: {
+        messageId: string;
+        visibility: 'public' | 'private';
+    }, client: Socket): Promise<void>;
 }

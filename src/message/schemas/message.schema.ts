@@ -1,11 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import {
-  MessageType,
-  ChatType,
-  MessageStatus,
-} from '../interfaces/message.interface';
 import { User } from 'src/user/schemas/user.schema';
-
 export const MessageSchema = new Schema(
   {
     sender: { type: Schema.Types.ObjectId, ref: User.name, required: true },
@@ -15,7 +9,7 @@ export const MessageSchema = new Schema(
       enum: ['personal', 'group'],
       required: true,
     },
-    text: { type: String },
+    text: { type: String, trim: true },
     fileUrl: { type: String },
     type: {
       type: String,

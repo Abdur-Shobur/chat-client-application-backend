@@ -35,7 +35,18 @@ let MessageController = class MessageController {
             return helper_1.ResponseHelper.error('Chats not found');
         return helper_1.ResponseHelper.success(result);
     }
-    getChatMessages(req, chatType, targetId) {
+    async getChatMessages(req, chatType, targetId) {
+        const userId = req.user._id;
+        if (chatType === 'group') {
+            const group = await this.groupService.findOne(targetId);
+            if (!group) {
+                throw new common_1.HttpException(helper_1.ResponseHelper.error('Group not found', common_1.HttpStatus.FORBIDDEN), common_1.HttpStatus.FORBIDDEN);
+            }
+            const isMember = group.members.some((memberId) => memberId._id.toString() === userId.toString());
+            if (!isMember) {
+                throw new common_1.HttpException(helper_1.ResponseHelper.error('You are not a member of this group', common_1.HttpStatus.FORBIDDEN), common_1.HttpStatus.FORBIDDEN);
+            }
+        }
         if (req?.user?.role?.type === 'admin') {
             return this.messageService.getChatMessagesForAdmin(chatType, req.user._id, targetId);
         }
@@ -46,7 +57,7 @@ let MessageController = class MessageController {
     findByChat(receiverId) {
         return this.messageService.findByChat(receiverId);
     }
-    async getChatInfo(id, type) {
+    async getChatInfo(req, id, type) {
         if (type !== 'group' && type !== 'personal') {
             return helper_1.ResponseHelper.error('Type is required');
         }
@@ -54,6 +65,10 @@ let MessageController = class MessageController {
             const group = await this.groupService.findOne(id);
             if (!group) {
                 return helper_1.ResponseHelper.error(`Group with ID ${id} not found`);
+            }
+            const isMember = group.members.some((memberId) => memberId._id.toString() === req.user._id.toString());
+            if (!isMember) {
+                throw new common_1.HttpException(helper_1.ResponseHelper.error('You are not a member of this group', common_1.HttpStatus.FORBIDDEN), common_1.HttpStatus.FORBIDDEN);
             }
             return helper_1.ResponseHelper.success({ ...group, type: 'group' }, 'Group info retrieved successfully');
         }
@@ -103,7 +118,7 @@ __decorate([
     __param(2, (0, common_1.Param)('targetId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, String, String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], MessageController.prototype, "getChatMessages", null);
 __decorate([
     (0, common_1.Get)('chat/:receiverId'),
@@ -114,10 +129,11 @@ __decorate([
 ], MessageController.prototype, "findByChat", null);
 __decorate([
     (0, common_1.Get)('info/:id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Query)('type')),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('id')),
+    __param(2, (0, common_1.Query)('type')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:paramtypes", [Object, String, String]),
     __metadata("design:returntype", Promise)
 ], MessageController.prototype, "getChatInfo", null);
 __decorate([

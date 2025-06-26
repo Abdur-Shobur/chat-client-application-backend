@@ -8,6 +8,8 @@ import {
   UseGuards,
   Req,
   Query,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { MessageService } from './message.service';
 import { UpdateMessageDto } from './dto/update-message.dto';
@@ -42,11 +44,36 @@ export class MessageController {
   }
 
   @Get('chat-messages/:chatType/:targetId')
-  getChatMessages(
+  async getChatMessages(
     @Req() req: any,
     @Param('chatType') chatType: 'personal' | 'group',
     @Param('targetId') targetId: string,
   ) {
+    const userId = req.user._id;
+    if (chatType === 'group') {
+      const group = await this.groupService.findOne(targetId);
+
+      if (!group) {
+        throw new HttpException(
+          ResponseHelper.error('Group not found', HttpStatus.FORBIDDEN),
+          HttpStatus.FORBIDDEN,
+        );
+      }
+      const isMember = group.members.some(
+        (memberId: any) => memberId._id.toString() === userId.toString(),
+      );
+
+      if (!isMember) {
+        throw new HttpException(
+          ResponseHelper.error(
+            'You are not a member of this group',
+            HttpStatus.FORBIDDEN,
+          ),
+          HttpStatus.FORBIDDEN,
+        );
+      }
+    }
+
     if (req?.user?.role?.type === 'admin') {
       return this.messageService.getChatMessagesForAdmin(
         chatType,
@@ -70,6 +97,7 @@ export class MessageController {
   //  info endpoint to get chat info
   @Get('info/:id')
   async getChatInfo(
+    @Req() req: any,
     @Param('id') id: string,
     @Query('type') type: 'personal' | 'group',
   ) {
@@ -82,6 +110,20 @@ export class MessageController {
 
       if (!group) {
         return ResponseHelper.error(`Group with ID ${id} not found`);
+      }
+
+      const isMember = group.members.some(
+        (memberId: any) => memberId._id.toString() === req.user._id.toString(),
+      );
+
+      if (!isMember) {
+        throw new HttpException(
+          ResponseHelper.error(
+            'You are not a member of this group',
+            HttpStatus.FORBIDDEN,
+          ),
+          HttpStatus.FORBIDDEN,
+        );
       }
 
       // Return group info with type

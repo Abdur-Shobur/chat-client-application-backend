@@ -39,7 +39,9 @@ export class MessageGateway
 
   afterInit(server: Server) {
     this.server = server; // Store the server instance
-    console.log('WebSocket Server Initialized');
+
+    this.configService.isDevelopment &&
+      console.log('WebSocket Server Initialized');
 
     server.use(
       AuthWsMiddleware(this.jwtService, this.configService, this.userService),
@@ -60,7 +62,9 @@ export class MessageGateway
 
       this.connectedUsers.set(socket.id, user._id.toString());
       this.connectedUsersDetailed.set(socket.id, user);
-      console.log(`Client connected: ${socket.id} (userId: ${user._id})`);
+
+      this.configService.isDevelopment &&
+        console.log(`Client connected: ${socket.id} (userId: ${user._id})`);
     } else {
       console.warn(`Unauthorized socket tried to connect: ${socket.id}`);
       socket.disconnect();
@@ -69,7 +73,8 @@ export class MessageGateway
 
   handleDisconnect(socket: Socket) {
     const userId = this.connectedUsers.get(socket.id);
-    console.log(`Client disconnected: ${socket.id} (userId: ${userId})`);
+    this.configService.isDevelopment &&
+      console.log(`Client disconnected: ${socket.id} (userId: ${userId})`);
     this.connectedUsers.delete(socket.id);
   }
 
@@ -99,11 +104,21 @@ export class MessageGateway
       }
     } else if (data.chatType === 'group') {
       const isSenderAdmin = senderUser.role?.type === 'admin';
+      const groupMembers = await this.groupService.findOne(
+        savedMessage.receiver.toString(),
+      );
+      const groupMem = groupMembers.members as any[]; //{ _id: string }[]
 
       for (const [socketId, user] of this.connectedUsersDetailed.entries()) {
         if (user._id === senderUser._id) continue; // Skip sender
 
         const isUserAdmin = user.role?.type === 'admin';
+
+        const isGroupMember = groupMem.some(
+          (member) => member._id.toString() === user._id.toString(),
+        );
+
+        if (!isGroupMember) continue;
 
         const replyToUserId =
           typeof savedMessage.replyToUser === 'object' &&
@@ -144,101 +159,38 @@ export class MessageGateway
 
     client.emit('messageSent', savedMessage);
   }
-}
 
-/*
-
-else if (data.chatType === 'group') {
-      // Group chat behavior based on sender's role
-      for (const [socketId, user] of this.connectedUsersDetailed.entries()) {
-        if (user._id === senderUser._id) continue; // Skip sender
-
-        if (
-          savedMessage?.replyToUser?._id &&
-          savedMessage?.replyToUser?._id?.toString() === user?._id?.toString()
-        ) {
-          continue;
-        }
-
-        console.log({ savedMessage, user, senderUser });
-        const isSenderAdmin = senderUser.role?.type === 'admin';
-        const isUserAdmin = user.role?.type === 'admin';
-
-        if (isSenderAdmin) {
-          // Admin sends: broadcast to all users except self
-          client.to(socketId).emit('receiveMessage', savedMessage);
-        } else if (isUserAdmin) {
-          // User sends: only admins receive the message
-          client.to(socketId).emit('receiveMessage', savedMessage);
-        }
-      }
+  @SubscribeMessage('toggleVisibility')
+  async handleToggleVisibility(
+    @MessageBody()
+    data: { messageId: string; visibility: 'public' | 'private' },
+    @ConnectedSocket() client: Socket,
+  ) {
+    const user = client.data.user;
+    if (!user) {
+      client.emit('unauthorized');
+      return;
     }
 
-else if (data.chatType === 'group') {
-  const isSenderAdmin = senderUser.role?.type === 'admin';
-
-  for (const [socketId, user] of this.connectedUsersDetailed.entries()) {
-    if (user._id === senderUser._id) continue; // Skip sender
-
-    const isUserAdmin = user.role?.type === 'admin';
-
-    const replyToUserId =
-      typeof savedMessage.replyToUser === 'object'
-        ? savedMessage.replyToUser?._id?.toString()
-        : savedMessage.replyToUser?.toString();
-
-    const isTargetUser = replyToUserId === user._id.toString();
-    const isPublic = savedMessage.visibility === 'public';
-
-    // ✅ Admin public message → everyone gets it
-    if (isSenderAdmin && isPublic) {
-      client.to(socketId).emit('receiveMessage', savedMessage);
-      continue;
+    // Update visibility in DB
+    const updatedMessage = await this.messageService.toggleVisibility(
+      data.messageId,
+    );
+    if (!updatedMessage) {
+      client.emit('error', { message: 'Message not found or update failed' });
+      return;
     }
 
-    // ✅ Admin private reply → only to replyToUser + admins
-    if (isSenderAdmin && !isPublic) {
-      if (isUserAdmin || isTargetUser) {
-        client.to(socketId).emit('receiveMessage', savedMessage);
-      }
-      continue;
-    }
+    // ✅ Broadcast visibility update to everyone (since frontend will refetch anyway)
+    this.server.emit('visibilityUpdated', {
+      messageId: updatedMessage._id,
+      visibility: updatedMessage.visibility,
+    });
 
-    // ✅ User public message → all users
-    if (!isSenderAdmin && isPublic) {
-      client.to(socketId).emit('receiveMessage', savedMessage);
-      continue;
-    }
-
-    // ✅ User private reply → only to replyToUser + admins
-    if (!isSenderAdmin && !isPublic) {
-      if (isUserAdmin || isTargetUser) {
-        client.to(socketId).emit('receiveMessage', savedMessage);
-      }
-      continue;
-    }
+    // ✅ Acknowledge back to sender
+    client.emit('visibilityToggled', {
+      messageId: updatedMessage._id,
+      visibility: updatedMessage.visibility,
+    });
   }
 }
-
-client.emit('messageSent', savedMessage);
-
-
-
-else if (data.chatType === 'group') {
-      // Group chat behavior based on sender's role
-      for (const [socketId, user] of this.connectedUsersDetailed.entries()) {
-        if (user._id === senderUser._id) continue; // Skip sender
-
-        const isSenderAdmin = senderUser.role?.type === 'admin';
-        const isUserAdmin = user.role?.type === 'admin';
-
-        if (isSenderAdmin) {
-          // Admin sends: broadcast to all users except self
-          client.to(socketId).emit('receiveMessage', savedMessage);
-        } else if (isUserAdmin) {
-          // User sends: only admins receive the message
-          client.to(socketId).emit('receiveMessage', savedMessage);
-        }
-      }
-    }
-*/

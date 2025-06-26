@@ -17,11 +17,15 @@ import { ResponseHelper } from 'src/helper';
 import { AuthGuard } from 'src/helper/auth-guard';
 import { UpdateStatusDto } from './dto/update-status.dto'; // Optional, if group has status
 import { JoinGroupDto } from './dto/join-group.dto';
+import { MessageService } from 'src/message/message.service';
 
 @UseGuards(AuthGuard)
 @Controller('group')
 export class GroupController {
-  constructor(private readonly groupService: GroupService) {}
+  constructor(
+    private readonly groupService: GroupService,
+    private readonly messageService: MessageService,
+  ) {}
 
   /**
    * Create a Group
@@ -32,6 +36,9 @@ export class GroupController {
     const data = {
       ...createGroupDto,
       createdBy: req.user._id,
+      joinLink:
+        createGroupDto.name.trim().replace(/\s+/g, '-').toLowerCase() ||
+        new Date().getTime().toString(),
     };
 
     // Ensure creator is added as a member
@@ -41,6 +48,15 @@ export class GroupController {
 
     const result = await this.groupService.create(data);
     if (!result) return ResponseHelper.error('Group not created');
+    // ✅ Send Welcome Message
+    await this.messageService.create({
+      sender: req.user._id,
+      receiver: result._id.toString(), // groupId
+      chatType: 'group',
+      text: `Welcome Everyone!`,
+      type: 'text',
+      visibility: 'public',
+    });
     return ResponseHelper.success(result, 'Group created successfully');
   }
 

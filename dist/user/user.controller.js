@@ -47,7 +47,6 @@ let UserController = class UserController {
     }
     async updateStatus(id, updateStatusDto) {
         const result = await this.userService.updateStatus(id, updateStatusDto.status);
-        console.log(result);
         if (!result) {
             return helper_1.ResponseHelper.error('Status not updated');
         }

@@ -3,9 +3,11 @@ import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { UpdateStatusDto } from './dto/update-status.dto';
 import { JoinGroupDto } from './dto/join-group.dto';
+import { MessageService } from 'src/message/message.service';
 export declare class GroupController {
     private readonly groupService;
-    constructor(groupService: GroupService);
+    private readonly messageService;
+    constructor(groupService: GroupService, messageService: MessageService);
     create(req: any, createGroupDto: CreateGroupDto): Promise<import("../type").IApiResponse<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("./schemas/group.schema").Group, {}> & import("./schemas/group.schema").Group & {
         _id: import("mongoose").Types.ObjectId;
     } & {

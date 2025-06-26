@@ -24,6 +24,7 @@ __decorate([
         required: false,
         minlength: [2, 'name must be at least 2 characters long'],
         maxlength: [120, 'name must be at most 120 characters long'],
+        trim: true,
     }),
     __metadata("design:type", String)
 ], Group.prototype, "name", void 0);

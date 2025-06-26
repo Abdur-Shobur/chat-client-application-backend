@@ -21,14 +21,18 @@ const helper_1 = require("../helper");
 const auth_guard_1 = require("../helper/auth-guard");
 const update_status_dto_1 = require("./dto/update-status.dto");
 const join_group_dto_1 = require("./dto/join-group.dto");
+const message_service_1 = require("../message/message.service");
 let GroupController = class GroupController {
-    constructor(groupService) {
+    constructor(groupService, messageService) {
         this.groupService = groupService;
+        this.messageService = messageService;
     }
     async create(req, createGroupDto) {
         const data = {
             ...createGroupDto,
             createdBy: req.user._id,
+            joinLink: createGroupDto.name.trim().replace(/\s+/g, '-').toLowerCase() ||
+                new Date().getTime().toString(),
         };
         if (!data.members.includes(req.user._id)) {
             data.members.push(req.user._id);
@@ -36,6 +40,14 @@ let GroupController = class GroupController {
         const result = await this.groupService.create(data);
         if (!result)
             return helper_1.ResponseHelper.error('Group not created');
+        await this.messageService.create({
+            sender: req.user._id,
+            receiver: result._id.toString(),
+            chatType: 'group',
+            text: `Welcome Everyone!`,
+            type: 'text',
+            visibility: 'public',
+        });
         return helper_1.ResponseHelper.success(result, 'Group created successfully');
     }
     async findAll(joinType) {
@@ -193,6 +205,7 @@ __decorate([
 exports.GroupController = GroupController = __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Controller)('group'),
-    __metadata("design:paramtypes", [group_service_1.GroupService])
+    __metadata("design:paramtypes", [group_service_1.GroupService,
+        message_service_1.MessageService])
 ], GroupController);
 //# sourceMappingURL=group.controller.js.map

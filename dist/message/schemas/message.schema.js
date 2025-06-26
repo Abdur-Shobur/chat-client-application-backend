@@ -11,7 +11,7 @@ exports.MessageSchema = new mongoose_1.Schema({
         enum: ['personal', 'group'],
         required: true,
     },
-    text: { type: String },
+    text: { type: String, trim: true },
     fileUrl: { type: String },
     type: {
         type: String,

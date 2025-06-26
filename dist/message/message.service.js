@@ -218,7 +218,7 @@ let MessageService = class MessageService {
             .populate([
             {
                 path: 'sender',
-                select: 'name role',
+                select: 'name role phone',
                 populate: {
                     path: 'role',
                     select: 'name type',
@@ -228,13 +228,13 @@ let MessageService = class MessageService {
                 path: 'replyTo',
                 populate: {
                     path: 'sender',
-                    select: 'name',
+                    select: 'name phone',
                 },
                 select: 'text type sender',
             },
             {
                 path: 'replyToUser',
-                select: 'name',
+                select: 'name phone',
             },
         ])
             .limit(20)
@@ -266,7 +266,7 @@ let MessageService = class MessageService {
             .populate([
             {
                 path: 'sender',
-                select: 'name role',
+                select: 'name role phone',
                 populate: {
                     path: 'role',
                     select: 'name type',
@@ -276,7 +276,7 @@ let MessageService = class MessageService {
                 path: 'replyTo',
                 populate: {
                     path: 'sender',
-                    select: 'name',
+                    select: 'name phone',
                 },
                 select: 'text type sender',
             },

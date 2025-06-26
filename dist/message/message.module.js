@@ -26,7 +26,7 @@ exports.MessageModule = MessageModule = __decorate([
                 { name: 'Message', schema: message_schema_1.MessageSchema },
                 { name: group_schema_1.Group.name, schema: group_schema_1.GroupSchema },
             ]),
-            group_module_1.GroupModule,
+            (0, common_1.forwardRef)(() => group_module_1.GroupModule),
             user_module_1.UserModule,
         ],
         controllers: [message_controller_1.MessageController],

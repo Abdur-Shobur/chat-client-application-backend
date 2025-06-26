@@ -34,7 +34,8 @@ let MessageGateway = class MessageGateway {
     }
     afterInit(server) {
         this.server = server;
-        console.log('WebSocket Server Initialized');
+        this.configService.isDevelopment &&
+            console.log('WebSocket Server Initialized');
         server.use((0, ws_auth_middleware_1.AuthWsMiddleware)(this.jwtService, this.configService, this.userService));
     }
     handleConnection(socket) {
@@ -50,7 +51,8 @@ let MessageGateway = class MessageGateway {
             }
             this.connectedUsers.set(socket.id, user._id.toString());
             this.connectedUsersDetailed.set(socket.id, user);
-            console.log(`Client connected: ${socket.id} (userId: ${user._id})`);
+            this.configService.isDevelopment &&
+                console.log(`Client connected: ${socket.id} (userId: ${user._id})`);
         }
         else {
             console.warn(`Unauthorized socket tried to connect: ${socket.id}`);
@@ -59,7 +61,8 @@ let MessageGateway = class MessageGateway {
     }
     handleDisconnect(socket) {
         const userId = this.connectedUsers.get(socket.id);
-        console.log(`Client disconnected: ${socket.id} (userId: ${userId})`);
+        this.configService.isDevelopment &&
+            console.log(`Client disconnected: ${socket.id} (userId: ${userId})`);
         this.connectedUsers.delete(socket.id);
     }
     async handleSendMessage(data, client) {
@@ -82,10 +85,15 @@ let MessageGateway = class MessageGateway {
         }
         else if (data.chatType === 'group') {
             const isSenderAdmin = senderUser.role?.type === 'admin';
+            const groupMembers = await this.groupService.findOne(savedMessage.receiver.toString());
+            const groupMem = groupMembers.members;
             for (const [socketId, user] of this.connectedUsersDetailed.entries()) {
                 if (user._id === senderUser._id)
                     continue;
                 const isUserAdmin = user.role?.type === 'admin';
+                const isGroupMember = groupMem.some((member) => member._id.toString() === user._id.toString());
+                if (!isGroupMember)
+                    continue;
                 const replyToUserId = typeof savedMessage.replyToUser === 'object' &&
                     savedMessage.replyToUser?._id?.toString();
                 const isTargetUser = replyToUserId === user._id.toString();
@@ -114,6 +122,26 @@ let MessageGateway = class MessageGateway {
         }
         client.emit('messageSent', savedMessage);
     }
+    async handleToggleVisibility(data, client) {
+        const user = client.data.user;
+        if (!user) {
+            client.emit('unauthorized');
+            return;
+        }
+        const updatedMessage = await this.messageService.toggleVisibility(data.messageId);
+        if (!updatedMessage) {
+            client.emit('error', { message: 'Message not found or update failed' });
+            return;
+        }
+        this.server.emit('visibilityUpdated', {
+            messageId: updatedMessage._id,
+            visibility: updatedMessage.visibility,
+        });
+        client.emit('visibilityToggled', {
+            messageId: updatedMessage._id,
+            visibility: updatedMessage.visibility,
+        });
+    }
 };
 exports.MessageGateway = MessageGateway;
 __decorate([
@@ -125,6 +153,14 @@ __decorate([
         socket_io_1.Socket]),
     __metadata("design:returntype", Promise)
 ], MessageGateway.prototype, "handleSendMessage", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('toggleVisibility'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __param(1, (0, websockets_1.ConnectedSocket)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, socket_io_1.Socket]),
+    __metadata("design:returntype", Promise)
+], MessageGateway.prototype, "handleToggleVisibility", null);
 exports.MessageGateway = MessageGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({
         cors: {

@@ -79,8 +79,6 @@ export class UserController {
       updateStatusDto.status,
     );
 
-    console.log(result);
-
     if (!result) {
       return ResponseHelper.error('Status not updated');
     }

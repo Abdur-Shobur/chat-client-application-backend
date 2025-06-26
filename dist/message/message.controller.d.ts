@@ -23,7 +23,7 @@ export declare class MessageController {
     }> & {
         __v: number;
     })[]>;
-    getChatInfo(id: string, type: 'personal' | 'group'): Promise<import("../type").IApiResponse<{
+    getChatInfo(req: any, id: string, type: 'personal' | 'group'): Promise<import("../type").IApiResponse<{
         type: string;
         _id: import("mongoose").Types.ObjectId;
         $assertPopulated: <Paths = {}>(path: string | string[], values?: Partial<Paths>) => Omit<import("mongoose").Document<unknown, {}, import("../group/schemas/group.schema").Group, {}> & import("../group/schemas/group.schema").Group & {

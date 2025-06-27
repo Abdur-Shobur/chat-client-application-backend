@@ -5,11 +5,11 @@ export declare const MessageSchema: mongoose.Schema<any, mongoose.Model<any, any
     createdAt: NativeDate;
     updatedAt: NativeDate;
 } & {
-    sender: mongoose.Types.ObjectId;
-    type: "text" | "image" | "file" | "video" | "audio";
-    receiver: mongoose.Types.ObjectId;
-    chatType: "personal" | "group";
+    type: "text" | "file" | "image" | "video" | "audio";
     status: "sent" | "delivered" | "read";
+    chatType: "group" | "personal";
+    sender: mongoose.Types.ObjectId;
+    receiver: mongoose.Types.ObjectId;
     visibility: "public" | "private";
     text?: string;
     fileUrl?: string;
@@ -19,11 +19,11 @@ export declare const MessageSchema: mongoose.Schema<any, mongoose.Model<any, any
     createdAt: NativeDate;
     updatedAt: NativeDate;
 } & {
-    sender: mongoose.Types.ObjectId;
-    type: "text" | "image" | "file" | "video" | "audio";
-    receiver: mongoose.Types.ObjectId;
-    chatType: "personal" | "group";
+    type: "text" | "file" | "image" | "video" | "audio";
     status: "sent" | "delivered" | "read";
+    chatType: "group" | "personal";
+    sender: mongoose.Types.ObjectId;
+    receiver: mongoose.Types.ObjectId;
     visibility: "public" | "private";
     text?: string;
     fileUrl?: string;
@@ -33,11 +33,11 @@ export declare const MessageSchema: mongoose.Schema<any, mongoose.Model<any, any
     createdAt: NativeDate;
     updatedAt: NativeDate;
 } & {
-    sender: mongoose.Types.ObjectId;
-    type: "text" | "image" | "file" | "video" | "audio";
-    receiver: mongoose.Types.ObjectId;
-    chatType: "personal" | "group";
+    type: "text" | "file" | "image" | "video" | "audio";
     status: "sent" | "delivered" | "read";
+    chatType: "group" | "personal";
+    sender: mongoose.Types.ObjectId;
+    receiver: mongoose.Types.ObjectId;
     visibility: "public" | "private";
     text?: string;
     fileUrl?: string;

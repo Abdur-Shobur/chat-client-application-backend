@@ -35,8 +35,10 @@ let MessageController = class MessageController {
             return helper_1.ResponseHelper.error('Chats not found');
         return helper_1.ResponseHelper.success(result);
     }
-    async getChatMessages(req, chatType, targetId) {
+    async getChatMessages(req, chatType, targetId, page = '1', limit = '10') {
         const userId = req.user._id;
+        const pageNumber = parseInt(page, 10) || 1;
+        const limitNumber = parseInt(limit, 10) || 10;
         if (chatType === 'group') {
             const group = await this.groupService.findOne(targetId);
             if (!group) {
@@ -47,12 +49,17 @@ let MessageController = class MessageController {
                 throw new common_1.HttpException(helper_1.ResponseHelper.error('You are not a member of this group', common_1.HttpStatus.FORBIDDEN), common_1.HttpStatus.FORBIDDEN);
             }
         }
+        let result;
         if (req?.user?.role?.type === 'admin') {
-            return this.messageService.getChatMessagesForAdmin(chatType, req.user._id, targetId);
+            result = await this.messageService.getChatMessagesForAdmin(chatType, userId, targetId, pageNumber, limitNumber);
         }
         else {
-            return this.messageService.getChatMessages(chatType, req.user._id, targetId);
+            result = await this.messageService.getChatMessages(chatType, userId, targetId, pageNumber, limitNumber);
         }
+        return helper_1.ResponseHelper.success({
+            data: result.messages,
+            meta: result.meta,
+        });
     }
     findByChat(receiverId) {
         return this.messageService.findByChat(receiverId);
@@ -116,8 +123,10 @@ __decorate([
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('chatType')),
     __param(2, (0, common_1.Param)('targetId')),
+    __param(3, (0, common_1.Query)('page')),
+    __param(4, (0, common_1.Query)('limit')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, String, String]),
+    __metadata("design:paramtypes", [Object, String, String, Object, Object]),
     __metadata("design:returntype", Promise)
 ], MessageController.prototype, "getChatMessages", null);
 __decorate([

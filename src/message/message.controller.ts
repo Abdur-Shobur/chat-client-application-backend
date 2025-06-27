@@ -48,8 +48,15 @@ export class MessageController {
     @Req() req: any,
     @Param('chatType') chatType: 'personal' | 'group',
     @Param('targetId') targetId: string,
+    @Query('page') page = '1',
+    @Query('limit') limit = '10',
   ) {
     const userId = req.user._id;
+
+    const pageNumber = parseInt(page, 10) || 1;
+    const limitNumber = parseInt(limit, 10) || 10;
+
+    // Group membership check
     if (chatType === 'group') {
       const group = await this.groupService.findOne(targetId);
 
@@ -59,6 +66,7 @@ export class MessageController {
           HttpStatus.FORBIDDEN,
         );
       }
+
       const isMember = group.members.some(
         (memberId: any) => memberId._id.toString() === userId.toString(),
       );
@@ -74,20 +82,82 @@ export class MessageController {
       }
     }
 
+    let result;
+
     if (req?.user?.role?.type === 'admin') {
-      return this.messageService.getChatMessagesForAdmin(
+      result = await this.messageService.getChatMessagesForAdmin(
         chatType,
-        req.user._id,
+        userId,
         targetId,
+        pageNumber,
+        limitNumber,
       );
     } else {
-      return this.messageService.getChatMessages(
+      result = await this.messageService.getChatMessages(
+        chatType,
+        userId,
+        targetId,
+        pageNumber,
+        limitNumber,
+      );
+    }
+
+    return ResponseHelper.success({
+      data: result.messages,
+      meta: result.meta,
+    });
+  }
+
+  /*
+
+@Get('chat-messages/:chatType/:targetId')
+async getChatMessages(
+    @Req() req: any,
+    @Param('chatType') chatType: 'personal' | 'group',
+    @Param('targetId') targetId: string,
+  ) {
+    const userId = req.user._id;
+    if (chatType === 'group') {
+      const group = await this.groupService.findOne(targetId);
+
+      if (!group) {
+        throw new HttpException(
+          ResponseHelper.error('Group not found', HttpStatus.FORBIDDEN),
+          HttpStatus.FORBIDDEN,
+        );
+      }
+      const isMember = group.members.some(
+        (memberId: any) => memberId._id.toString() === userId.toString(),
+      );
+      
+      if (!isMember) {
+        throw new HttpException(
+          ResponseHelper.error(
+            'You are not a member of this group',
+            HttpStatus.FORBIDDEN,
+          ),
+          HttpStatus.FORBIDDEN,
+        );
+      }
+    }
+    
+    if (req?.user?.role?.type === 'admin') {
+      const result1 = this.messageService.getChatMessagesForAdmin(
         chatType,
         req.user._id,
         targetId,
       );
+      return ResponseHelper.success(result1);
+    } else {
+      const result2 = this.messageService.getChatMessages(
+        chatType,
+        req.user._id,
+        targetId,
+      );
+      return ResponseHelper.success(result2);
     }
   }
+  */
 
   @Get('chat/:receiverId')
   findByChat(@Param('receiverId') receiverId: string) {

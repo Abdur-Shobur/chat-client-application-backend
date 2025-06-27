@@ -170,9 +170,10 @@ let MessageService = class MessageService {
         });
         return combinedChats;
     }
-    async getChatMessages(chatType, userId, targetId) {
+    async getChatMessages(chatType, userId, targetId, page, limit) {
         const userObjectId = new mongoose_2.Types.ObjectId(userId);
         const targetObjectId = new mongoose_2.Types.ObjectId(targetId);
+        const skip = (page - 1) * limit;
         const matchQuery = chatType === 'personal'
             ? {
                 chatType: 'personal',
@@ -212,36 +213,50 @@ let MessageService = class MessageService {
                     },
                 ],
             };
-        const messages = await this.messageModel
-            .find(matchQuery)
-            .sort({ createdAt: -1 })
-            .populate([
-            {
-                path: 'sender',
-                select: 'name role phone',
-                populate: {
-                    path: 'role',
-                    select: 'name type',
-                },
-            },
-            {
-                path: 'replyTo',
-                populate: {
+        const [messages, total] = await Promise.all([
+            this.messageModel
+                .find(matchQuery)
+                .sort({ createdAt: -1 })
+                .skip(skip)
+                .limit(limit)
+                .populate([
+                {
                     path: 'sender',
+                    select: 'name role phone',
+                    populate: {
+                        path: 'role',
+                        select: 'name type',
+                    },
+                },
+                {
+                    path: 'replyTo',
+                    populate: {
+                        path: 'sender',
+                        select: 'name phone',
+                    },
+                    select: 'text type sender',
+                },
+                {
+                    path: 'replyToUser',
                     select: 'name phone',
                 },
-                select: 'text type sender',
+            ])
+                .exec(),
+            this.messageModel.countDocuments(matchQuery),
+        ]);
+        const totalPages = Math.ceil(total / limit);
+        return {
+            messages: messages.reverse(),
+            meta: {
+                total,
+                totalPages,
+                currentPage: page,
+                pageSize: limit,
             },
-            {
-                path: 'replyToUser',
-                select: 'name phone',
-            },
-        ])
-            .limit(20)
-            .exec();
-        return messages.reverse();
+        };
     }
-    async getChatMessagesForAdmin(chatType, userId, targetId) {
+    async getChatMessagesForAdmin(chatType, userId, targetId, page, limit) {
+        const skip = (page - 1) * limit;
         const matchQuery = chatType === 'personal'
             ? {
                 chatType: 'personal',
@@ -260,34 +275,47 @@ let MessageService = class MessageService {
                 chatType: 'group',
                 receiver: new mongoose_2.Types.ObjectId(targetId),
             };
-        const messages = await this.messageModel
-            .find(matchQuery)
-            .sort({ createdAt: -1 })
-            .populate([
-            {
-                path: 'sender',
-                select: 'name role phone',
-                populate: {
-                    path: 'role',
-                    select: 'name type',
-                },
-            },
-            {
-                path: 'replyTo',
-                populate: {
+        const [messages, total] = await Promise.all([
+            this.messageModel
+                .find(matchQuery)
+                .sort({ createdAt: -1 })
+                .skip(skip)
+                .limit(limit)
+                .populate([
+                {
                     path: 'sender',
-                    select: 'name phone',
+                    select: 'name role phone',
+                    populate: {
+                        path: 'role',
+                        select: 'name type',
+                    },
                 },
-                select: 'text type sender',
+                {
+                    path: 'replyTo',
+                    populate: {
+                        path: 'sender',
+                        select: 'name phone',
+                    },
+                    select: 'text type sender',
+                },
+                {
+                    path: 'replyToUser',
+                    select: 'name',
+                },
+            ])
+                .exec(),
+            this.messageModel.countDocuments(matchQuery),
+        ]);
+        const totalPages = Math.ceil(total / limit);
+        return {
+            messages: messages.reverse(),
+            meta: {
+                total,
+                totalPages,
+                currentPage: page,
+                pageSize: limit,
             },
-            {
-                path: 'replyToUser',
-                select: 'name',
-            },
-        ])
-            .limit(20)
-            .exec();
-        return messages.reverse();
+        };
     }
     findByChat(receiverId) {
         return this.messageModel.find({ receiver: receiverId }).exec();

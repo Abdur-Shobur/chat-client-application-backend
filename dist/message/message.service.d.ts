@@ -18,16 +18,32 @@ export declare class MessageService {
         __v: number;
     })[]>;
     getMyInboxList(userId: string): Promise<any[]>;
-    getChatMessages(chatType: 'personal' | 'group', userId: string, targetId: string): Promise<(import("mongoose").Document<unknown, {}, IMessage, {}> & IMessage & Required<{
-        _id: Types.ObjectId;
-    }> & {
-        __v: number;
-    })[]>;
-    getChatMessagesForAdmin(chatType: 'personal' | 'group', userId: string, targetId: string): Promise<(import("mongoose").Document<unknown, {}, IMessage, {}> & IMessage & Required<{
-        _id: Types.ObjectId;
-    }> & {
-        __v: number;
-    })[]>;
+    getChatMessages(chatType: 'personal' | 'group', userId: string, targetId: string, page: number, limit: number): Promise<{
+        messages: (import("mongoose").Document<unknown, {}, IMessage, {}> & IMessage & Required<{
+            _id: Types.ObjectId;
+        }> & {
+            __v: number;
+        })[];
+        meta: {
+            total: number;
+            totalPages: number;
+            currentPage: number;
+            pageSize: number;
+        };
+    }>;
+    getChatMessagesForAdmin(chatType: 'personal' | 'group', userId: string, targetId: string, page: number, limit: number): Promise<{
+        messages: (import("mongoose").Document<unknown, {}, IMessage, {}> & IMessage & Required<{
+            _id: Types.ObjectId;
+        }> & {
+            __v: number;
+        })[];
+        meta: {
+            total: number;
+            totalPages: number;
+            currentPage: number;
+            pageSize: number;
+        };
+    }>;
     findByChat(receiverId: string): Promise<(import("mongoose").Document<unknown, {}, IMessage, {}> & IMessage & Required<{
         _id: Types.ObjectId;
     }> & {

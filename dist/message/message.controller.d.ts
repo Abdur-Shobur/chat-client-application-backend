@@ -13,11 +13,10 @@ export declare class MessageController {
         __v: number;
     })[]>;
     findAllChat(req: any): Promise<import("../type").IApiResponse<any[]>>;
-    getChatMessages(req: any, chatType: 'personal' | 'group', targetId: string): Promise<(import("mongoose").Document<unknown, {}, import("./interfaces/message.interface").IMessage, {}> & import("./interfaces/message.interface").IMessage & Required<{
-        _id: import("mongoose").Types.ObjectId;
-    }> & {
-        __v: number;
-    })[]>;
+    getChatMessages(req: any, chatType: 'personal' | 'group', targetId: string, page?: string, limit?: string): Promise<import("../type").IApiResponse<{
+        data: any;
+        meta: any;
+    }>>;
     findByChat(receiverId: string): Promise<(import("mongoose").Document<unknown, {}, import("./interfaces/message.interface").IMessage, {}> & import("./interfaces/message.interface").IMessage & Required<{
         _id: import("mongoose").Types.ObjectId;
     }> & {

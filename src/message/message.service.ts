@@ -362,6 +362,105 @@ export class MessageService {
     chatType: 'personal' | 'group',
     userId: string,
     targetId: string,
+    page: number,
+    limit: number,
+  ) {
+    const userObjectId = new Types.ObjectId(userId);
+    const targetObjectId = new Types.ObjectId(targetId);
+    const skip = (page - 1) * limit;
+
+    const matchQuery =
+      chatType === 'personal'
+        ? {
+            chatType: 'personal',
+            $and: [
+              {
+                $or: [
+                  { sender: userObjectId, receiver: targetObjectId },
+                  { sender: targetObjectId, receiver: userObjectId },
+                ],
+              },
+              {
+                $or: [{ sender: userObjectId }, { visibility: 'public' }],
+              },
+            ],
+          }
+        : {
+            chatType: 'group',
+            receiver: targetObjectId,
+            $or: [
+              { sender: userObjectId },
+              {
+                $and: [
+                  { visibility: 'public' },
+                  {
+                    $or: [
+                      { replyToUser: { $exists: false } },
+                      { replyToUser: null },
+                    ],
+                  },
+                ],
+              },
+              {
+                $and: [
+                  { visibility: 'private' },
+                  { replyToUser: userObjectId },
+                ],
+              },
+            ],
+          };
+
+    // Execute both count and find queries in parallel
+    const [messages, total] = await Promise.all([
+      this.messageModel
+        .find(matchQuery)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .populate([
+          {
+            path: 'sender',
+            select: 'name role phone',
+            populate: {
+              path: 'role',
+              select: 'name type',
+            },
+          },
+          {
+            path: 'replyTo',
+            populate: {
+              path: 'sender',
+              select: 'name phone',
+            },
+            select: 'text type sender',
+          },
+          {
+            path: 'replyToUser',
+            select: 'name phone',
+          },
+        ])
+        .exec(),
+      this.messageModel.countDocuments(matchQuery),
+    ]);
+
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      messages: messages.reverse(), // Optional: oldest-to-newest
+      meta: {
+        total,
+        totalPages,
+        currentPage: page,
+        pageSize: limit,
+      },
+    };
+  }
+
+  /*
+  async getChatMessages(
+    chatType: 'personal' | 'group',
+    userId: string,
+    targetId: string,
   ) {
     const userObjectId = new Types.ObjectId(userId);
     const targetObjectId = new Types.ObjectId(targetId);
@@ -441,11 +540,72 @@ export class MessageService {
     return messages.reverse();
   }
 
+async getChatMessagesForAdmin(
+  chatType: 'personal' | 'group',
+  userId: string,
+  targetId: string,
+) {
+  const matchQuery =
+    chatType === 'personal'
+      ? {
+          chatType: 'personal',
+          $or: [
+            {
+              sender: new Types.ObjectId(userId),
+              receiver: new Types.ObjectId(targetId),
+            },
+            {
+              sender: new Types.ObjectId(targetId),
+              receiver: new Types.ObjectId(userId),
+            },
+          ],
+        }
+      : {
+          chatType: 'group',
+          receiver: new Types.ObjectId(targetId),
+        };
+
+  const messages = await this.messageModel
+    .find(matchQuery)
+    .sort({ createdAt: -1 })
+    .populate([
+      {
+        path: 'sender',
+        select: 'name role phone',
+        populate: {
+          path: 'role',
+          select: 'name type',
+        },
+      },
+      {
+        path: 'replyTo',
+        populate: {
+          path: 'sender',
+          select: 'name phone',
+        },
+        select: 'text type sender',
+      },
+      {
+        path: 'replyToUser',
+        select: 'name',
+      },
+    ])
+    .limit(20)
+    .exec();
+
+  return messages.reverse();
+}
+*/
+
   async getChatMessagesForAdmin(
     chatType: 'personal' | 'group',
     userId: string,
     targetId: string,
+    page: number,
+    limit: number,
   ) {
+    const skip = (page - 1) * limit;
+
     const matchQuery =
       chatType === 'personal'
         ? {
@@ -466,35 +626,50 @@ export class MessageService {
             receiver: new Types.ObjectId(targetId),
           };
 
-    const messages = await this.messageModel
-      .find(matchQuery)
-      .sort({ createdAt: -1 })
-      .populate([
-        {
-          path: 'sender',
-          select: 'name role phone',
-          populate: {
-            path: 'role',
-            select: 'name type',
-          },
-        },
-        {
-          path: 'replyTo',
-          populate: {
+    // Fetch messages and count in parallel
+    const [messages, total] = await Promise.all([
+      this.messageModel
+        .find(matchQuery)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .populate([
+          {
             path: 'sender',
-            select: 'name phone',
+            select: 'name role phone',
+            populate: {
+              path: 'role',
+              select: 'name type',
+            },
           },
-          select: 'text type sender',
-        },
-        {
-          path: 'replyToUser',
-          select: 'name',
-        },
-      ])
-      .limit(20)
-      .exec();
+          {
+            path: 'replyTo',
+            populate: {
+              path: 'sender',
+              select: 'name phone',
+            },
+            select: 'text type sender',
+          },
+          {
+            path: 'replyToUser',
+            select: 'name',
+          },
+        ])
+        .exec(),
+      this.messageModel.countDocuments(matchQuery),
+    ]);
 
-    return messages.reverse();
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      messages: messages.reverse(), // Optional: make them oldest to newest
+      meta: {
+        total,
+        totalPages,
+        currentPage: page,
+        pageSize: limit,
+      },
+    };
   }
 
   findByChat(receiverId: string) {

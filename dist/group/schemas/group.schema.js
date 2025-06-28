@@ -45,7 +45,7 @@ __decorate([
 __decorate([
     (0, mongoose_1.Prop)({
         required: true,
-        type: [mongoose_2.default.Schema.Types.ObjectId],
+        type: mongoose_2.default.Schema.Types.ObjectId,
         ref: user_schema_1.User.name,
     }),
     __metadata("design:type", String)
@@ -82,6 +82,14 @@ __decorate([
     }),
     __metadata("design:type", Array)
 ], Group.prototype, "pendingMembers", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({
+        required: false,
+        type: [mongoose_2.default.Schema.Types.ObjectId],
+        ref: user_schema_1.User.name,
+    }),
+    __metadata("design:type", Array)
+], Group.prototype, "leaveMembers", void 0);
 __decorate([
     (0, mongoose_1.Prop)({
         required: false,

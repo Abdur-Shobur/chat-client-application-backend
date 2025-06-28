@@ -43,6 +43,10 @@ let GroupService = class GroupService {
             path: 'members',
             select: '-password',
         })
+            .populate({
+            path: 'leaveMembers',
+            select: '-password',
+        })
             .lean()
             .exec();
         if (!group) {
@@ -71,8 +75,10 @@ let GroupService = class GroupService {
             throw new common_1.NotFoundException('Your request to join is already pending.');
         }
         if (group.joinApprovalType === 'auto') {
-            group.members.push(userId);
-            await group.save();
+            await this.groupModel.findByIdAndUpdate(groupId, {
+                $push: { members: userId },
+                $pull: { leaveMembers: userId },
+            });
             return { message: 'Successfully joined the group.' };
         }
         else if (group.joinApprovalType === 'admin') {
@@ -101,11 +107,20 @@ let GroupService = class GroupService {
         }
         return group;
     }
+    async approveJoinRequest(groupId, userId) {
+        return await this.groupModel.findByIdAndUpdate(groupId, {
+            $pull: { pendingMembers: userId, leaveMembers: userId },
+            $push: { members: userId },
+        }, { new: true, useFindAndModify: false });
+    }
     async updateStatus(id, status) {
         return await this.groupModel.findByIdAndUpdate(id, { status }, { new: true, useFindAndModify: false });
     }
     async leaveGroup(id, userId) {
-        return await this.groupModel.findByIdAndUpdate(id, { $pull: { members: userId } }, { new: true, useFindAndModify: false });
+        return await this.groupModel.findByIdAndUpdate(id, {
+            $pull: { members: userId },
+            $addToSet: { leaveMembers: userId },
+        }, { new: true, useFindAndModify: false });
     }
     async getMyJoinedGroups(userId) {
         return this.groupModel

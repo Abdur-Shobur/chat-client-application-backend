@@ -62,6 +62,17 @@ export declare class GroupService {
     }> & Required<{
         _id: Types.ObjectId;
     }>>;
+    approveJoinRequest(groupId: string, userId: string): Promise<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, Group, {}> & Group & {
+        _id: Types.ObjectId;
+    } & {
+        __v: number;
+    }, {}> & import("mongoose").Document<unknown, {}, Group, {}> & Group & {
+        _id: Types.ObjectId;
+    } & {
+        __v: number;
+    } & Required<{
+        _id: Types.ObjectId;
+    }>>;
     updateStatus(id: string, status: 'active' | 'inactive' | 'deleted'): Promise<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, Group, {}> & Group & {
         _id: Types.ObjectId;
     } & {

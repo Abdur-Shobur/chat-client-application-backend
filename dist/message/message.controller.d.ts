@@ -274,6 +274,7 @@ export declare class MessageController {
                 welcomeMessage: string;
                 members?: string[];
                 pendingMembers?: string[];
+                leaveMembers?: string[];
                 tags?: string[];
                 status?: import("../group/interfaces/group.interfaces").IGroupStatus;
                 _id: string;
@@ -300,6 +301,7 @@ export declare class MessageController {
                 welcomeMessage: string;
                 members?: string[];
                 pendingMembers?: string[];
+                leaveMembers?: string[];
                 tags?: string[];
                 status?: import("../group/interfaces/group.interfaces").IGroupStatus;
                 _id: string;
@@ -396,6 +398,7 @@ export declare class MessageController {
         welcomeMessage: string;
         members?: string[];
         pendingMembers?: string[];
+        leaveMembers?: string[];
         tags?: string[];
         status?: import("../group/interfaces/group.interfaces").IGroupStatus;
         __v: number;

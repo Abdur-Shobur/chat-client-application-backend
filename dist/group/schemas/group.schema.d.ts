@@ -12,6 +12,7 @@ export declare class Group implements IGroup {
     welcomeMessage: string;
     members?: string[];
     pendingMembers?: string[];
+    leaveMembers?: string[];
     tags?: string[];
     status?: IGroupStatus;
 }

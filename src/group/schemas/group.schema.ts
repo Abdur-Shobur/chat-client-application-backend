@@ -38,7 +38,7 @@ export class Group implements IGroup {
   // createdBy
   @Prop({
     required: true,
-    type: [mongoose.Schema.Types.ObjectId],
+    type: mongoose.Schema.Types.ObjectId,
     ref: User.name,
   })
   createdBy: string;
@@ -73,6 +73,14 @@ export class Group implements IGroup {
     ref: User.name,
   })
   pendingMembers?: string[];
+
+  // leaveMembers
+  @Prop({
+    required: false,
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: User.name,
+  })
+  leaveMembers?: string[];
 
   // tags
   @Prop({

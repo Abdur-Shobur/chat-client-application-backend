@@ -75,6 +75,7 @@ let MessageGateway = class MessageGateway {
             ...data,
             sender: senderUser._id,
         });
+        console.log(savedMessage);
         if (data.chatType === 'personal') {
             for (const [socketId, userId] of this.connectedUsers.entries()) {
                 const receiverId = savedMessage.receiver.toString();
@@ -133,6 +134,7 @@ let MessageGateway = class MessageGateway {
             client.emit('error', { message: 'Message not found or update failed' });
             return;
         }
+        console.log({ updatedMessage });
         this.server.emit('visibilityUpdated', {
             messageId: updatedMessage._id,
             visibility: updatedMessage.visibility,

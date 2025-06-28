@@ -9,6 +9,7 @@ export interface IGroup {
   welcomeMessage: string;
   members?: string[];
   pendingMembers?: string[];
+  leaveMembers?: string[];
   tags?: string[];
   createdAt?: Date;
   updatedAt?: Date;

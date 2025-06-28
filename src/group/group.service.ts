@@ -37,6 +37,10 @@ export class GroupService {
         path: 'members',
         select: '-password',
       })
+      .populate({
+        path: 'leaveMembers',
+        select: '-password',
+      })
       .lean()
       .exec();
     if (!group) {
@@ -61,6 +65,31 @@ export class GroupService {
   }
 
   // group.service.ts
+  // async joinGroup(groupId: string, userId: string) {
+  //   const group = await this.groupModel.findById(groupId);
+  //   if (!group) throw new NotFoundException('Group not found');
+
+  //   // Ensure not already a member or pending
+  //   if (group.members?.includes(userId)) {
+  //     throw new NotFoundException('You are already a member of this group.');
+  //   }
+  //   if (group.pendingMembers?.includes(userId)) {
+  //     throw new NotFoundException('Your request to join is already pending.');
+  //   }
+
+  //   // Auto approve or wait for admin approval
+  //   if (group.joinApprovalType === 'auto') {
+  //     group.members.push(userId);
+  //     await group.save();
+  //     return { message: 'Successfully joined the group.' };
+  //   } else if (group.joinApprovalType === 'admin') {
+  //     group.pendingMembers.push(userId);
+  //     await group.save();
+  //     return { message: 'Join request submitted. Waiting for admin approval.' };
+  //   }
+
+  //   throw new NotFoundException('Invalid group configuration.');
+  // }
   async joinGroup(groupId: string, userId: string) {
     const group = await this.groupModel.findById(groupId);
     if (!group) throw new NotFoundException('Group not found');
@@ -75,8 +104,11 @@ export class GroupService {
 
     // Auto approve or wait for admin approval
     if (group.joinApprovalType === 'auto') {
-      group.members.push(userId);
-      await group.save();
+      // Remove from leaveMembers when joining and add to members
+      await this.groupModel.findByIdAndUpdate(groupId, {
+        $push: { members: userId },
+        $pull: { leaveMembers: userId }, // Remove from leaveMembers when rejoining
+      });
       return { message: 'Successfully joined the group.' };
     } else if (group.joinApprovalType === 'admin') {
       group.pendingMembers.push(userId);
@@ -114,6 +146,17 @@ export class GroupService {
     return group;
   }
 
+  async approveJoinRequest(groupId: string, userId: string) {
+    return await this.groupModel.findByIdAndUpdate(
+      groupId,
+      {
+        $pull: { pendingMembers: userId, leaveMembers: userId },
+        $push: { members: userId },
+      },
+      { new: true, useFindAndModify: false },
+    );
+  }
+
   async updateStatus(id: string, status: 'active' | 'inactive' | 'deleted') {
     return await this.groupModel.findByIdAndUpdate(
       id,
@@ -122,10 +165,21 @@ export class GroupService {
     );
   }
 
+  // async leaveGroup(id: string, userId: string) {
+  //   return await this.groupModel.findByIdAndUpdate(
+  //     id,
+  //     { $pull: { members: userId } },
+  //     { new: true, useFindAndModify: false },
+  //   );
+  // }
+
   async leaveGroup(id: string, userId: string) {
     return await this.groupModel.findByIdAndUpdate(
       id,
-      { $pull: { members: userId } },
+      {
+        $pull: { members: userId },
+        $addToSet: { leaveMembers: userId }, // Add to leaveMembers if not already present
+      },
       { new: true, useFindAndModify: false },
     );
   }

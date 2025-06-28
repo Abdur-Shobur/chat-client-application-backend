@@ -93,6 +93,7 @@ export class MessageGateway
       ...data,
       sender: senderUser._id,
     });
+    console.log(savedMessage);
 
     if (data.chatType === 'personal') {
       // Personal chat: Send only to receiver
@@ -180,6 +181,8 @@ export class MessageGateway
       client.emit('error', { message: 'Message not found or update failed' });
       return;
     }
+
+    console.log({ updatedMessage });
 
     // ✅ Broadcast visibility update to everyone (since frontend will refetch anyway)
     this.server.emit('visibilityUpdated', {

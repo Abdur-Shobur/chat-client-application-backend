@@ -16,9 +16,15 @@ export declare class MessageGateway implements OnGatewayInit, OnGatewayConnectio
     private connectedUsersDetailed;
     private server;
     constructor(messageService: MessageService, userService: UserService, groupService: GroupService, jwtService: JwtService, configService: CustomConfigService);
-    afterInit(server: Server): void;
+    handleGetActiveUsers(client: Socket): void;
+    private broadcastActiveUsers;
     handleConnection(socket: Socket): void;
     handleDisconnect(socket: Socket): void;
+    handleGetActiveUsersCount(client: Socket): void;
+    handleCheckUserOnline(data: {
+        userId: string;
+    }, client: Socket): void;
+    afterInit(server: Server): void;
     handleSendMessage(data: CreateMessageDto, client: Socket): Promise<void>;
     handleToggleVisibility(data: {
         messageId: string;

@@ -37,16 +37,38 @@ export class MessageGateway
     private readonly configService: CustomConfigService,
   ) {}
 
-  afterInit(server: Server) {
-    this.server = server; // Store the server instance
+  // Add these methods to your MessageGateway class
 
-    this.configService.isDevelopment &&
-      console.log('WebSocket Server Initialized');
-
-    server.use(
-      AuthWsMiddleware(this.jwtService, this.configService, this.userService),
+  @SubscribeMessage('getActiveUsers')
+  handleGetActiveUsers(@ConnectedSocket() client: Socket) {
+    const users = Array.from(this.connectedUsersDetailed.values()).map(
+      (user) => ({
+        _id: user._id,
+        name: user.name,
+        role: user.role,
+        // Add online status or last seen if needed
+        isOnline: true,
+      }),
     );
+
+    client.emit('activeUsers', users);
   }
+
+  // Broadcast active users to all connected clients
+  private broadcastActiveUsers() {
+    const users = Array.from(this.connectedUsersDetailed.values()).map(
+      (user) => ({
+        _id: user._id,
+        name: user.name,
+        role: user.role,
+        isOnline: true,
+      }),
+    );
+
+    this.server.emit('activeUsersUpdated', users);
+  }
+
+  // Enhanced handleConnection to broadcast user list updates
   handleConnection(socket: Socket) {
     const user = socket.data.user;
     if (user) {
@@ -65,18 +87,90 @@ export class MessageGateway
 
       this.configService.isDevelopment &&
         console.log(`Client connected: ${socket.id} (userId: ${user._id})`);
+
+      // Broadcast updated user list to all clients
+      this.broadcastActiveUsers();
     } else {
       console.warn(`Unauthorized socket tried to connect: ${socket.id}`);
       socket.disconnect();
     }
   }
 
+  // Enhanced handleDisconnect to broadcast user list updates
   handleDisconnect(socket: Socket) {
     const userId = this.connectedUsers.get(socket.id);
     this.configService.isDevelopment &&
       console.log(`Client disconnected: ${socket.id} (userId: ${userId})`);
+
     this.connectedUsers.delete(socket.id);
+    this.connectedUsersDetailed.delete(socket.id);
+
+    // Broadcast updated user list to all clients
+    this.broadcastActiveUsers();
   }
+
+  // Get active users count
+  @SubscribeMessage('getActiveUsersCount')
+  handleGetActiveUsersCount(@ConnectedSocket() client: Socket) {
+    const count = this.connectedUsersDetailed.size;
+    client.emit('activeUsersCount', count);
+  }
+
+  // Check if specific user is online
+  @SubscribeMessage('checkUserOnline')
+  handleCheckUserOnline(
+    @MessageBody() data: { userId: string },
+    @ConnectedSocket() client: Socket,
+  ) {
+    const isOnline = Array.from(this.connectedUsersDetailed.values()).some(
+      (user) => user._id.toString() === data.userId,
+    );
+
+    client.emit('userOnlineStatus', {
+      userId: data.userId,
+      isOnline,
+    });
+  }
+  afterInit(server: Server) {
+    this.server = server; // Store the server instance
+
+    this.configService.isDevelopment &&
+      console.log('WebSocket Server Initialized');
+
+    server.use(
+      AuthWsMiddleware(this.jwtService, this.configService, this.userService),
+    );
+  }
+  // handleConnection(socket: Socket) {
+  //   const user = socket.data.user;
+  //   if (user) {
+  //     // Disconnect any existing sockets for this user
+  //     for (const [sockId, userId] of this.connectedUsers.entries()) {
+  //       if (userId === user._id.toString()) {
+  //         const existingSocket = this.server.sockets.sockets.get(sockId);
+  //         if (existingSocket && existingSocket.id !== socket.id) {
+  //           existingSocket.disconnect();
+  //         }
+  //       }
+  //     }
+
+  //     this.connectedUsers.set(socket.id, user._id.toString());
+  //     this.connectedUsersDetailed.set(socket.id, user);
+
+  //     this.configService.isDevelopment &&
+  //       console.log(`Client connected: ${socket.id} (userId: ${user._id})`);
+  //   } else {
+  //     console.warn(`Unauthorized socket tried to connect: ${socket.id}`);
+  //     socket.disconnect();
+  //   }
+  // }
+
+  // handleDisconnect(socket: Socket) {
+  //   const userId = this.connectedUsers.get(socket.id);
+  //   this.configService.isDevelopment &&
+  //     console.log(`Client disconnected: ${socket.id} (userId: ${userId})`);
+  //   this.connectedUsers.delete(socket.id);
+  // }
 
   @SubscribeMessage('sendMessage')
   async handleSendMessage(
@@ -93,7 +187,6 @@ export class MessageGateway
       ...data,
       sender: senderUser._id,
     });
-    console.log(savedMessage);
 
     if (data.chatType === 'personal') {
       // Personal chat: Send only to receiver
@@ -181,8 +274,6 @@ export class MessageGateway
       client.emit('error', { message: 'Message not found or update failed' });
       return;
     }
-
-    console.log({ updatedMessage });
 
     // ✅ Broadcast visibility update to everyone (since frontend will refetch anyway)
     this.server.emit('visibilityUpdated', {

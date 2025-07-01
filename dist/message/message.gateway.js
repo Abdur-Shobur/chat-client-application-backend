@@ -32,11 +32,23 @@ let MessageGateway = class MessageGateway {
         this.connectedUsers = new Map();
         this.connectedUsersDetailed = new Map();
     }
-    afterInit(server) {
-        this.server = server;
-        this.configService.isDevelopment &&
-            console.log('WebSocket Server Initialized');
-        server.use((0, ws_auth_middleware_1.AuthWsMiddleware)(this.jwtService, this.configService, this.userService));
+    handleGetActiveUsers(client) {
+        const users = Array.from(this.connectedUsersDetailed.values()).map((user) => ({
+            _id: user._id,
+            name: user.name,
+            role: user.role,
+            isOnline: true,
+        }));
+        client.emit('activeUsers', users);
+    }
+    broadcastActiveUsers() {
+        const users = Array.from(this.connectedUsersDetailed.values()).map((user) => ({
+            _id: user._id,
+            name: user.name,
+            role: user.role,
+            isOnline: true,
+        }));
+        this.server.emit('activeUsersUpdated', users);
     }
     handleConnection(socket) {
         const user = socket.data.user;
@@ -53,6 +65,7 @@ let MessageGateway = class MessageGateway {
             this.connectedUsersDetailed.set(socket.id, user);
             this.configService.isDevelopment &&
                 console.log(`Client connected: ${socket.id} (userId: ${user._id})`);
+            this.broadcastActiveUsers();
         }
         else {
             console.warn(`Unauthorized socket tried to connect: ${socket.id}`);
@@ -64,6 +77,25 @@ let MessageGateway = class MessageGateway {
         this.configService.isDevelopment &&
             console.log(`Client disconnected: ${socket.id} (userId: ${userId})`);
         this.connectedUsers.delete(socket.id);
+        this.connectedUsersDetailed.delete(socket.id);
+        this.broadcastActiveUsers();
+    }
+    handleGetActiveUsersCount(client) {
+        const count = this.connectedUsersDetailed.size;
+        client.emit('activeUsersCount', count);
+    }
+    handleCheckUserOnline(data, client) {
+        const isOnline = Array.from(this.connectedUsersDetailed.values()).some((user) => user._id.toString() === data.userId);
+        client.emit('userOnlineStatus', {
+            userId: data.userId,
+            isOnline,
+        });
+    }
+    afterInit(server) {
+        this.server = server;
+        this.configService.isDevelopment &&
+            console.log('WebSocket Server Initialized');
+        server.use((0, ws_auth_middleware_1.AuthWsMiddleware)(this.jwtService, this.configService, this.userService));
     }
     async handleSendMessage(data, client) {
         const senderUser = client.data.user;
@@ -75,7 +107,6 @@ let MessageGateway = class MessageGateway {
             ...data,
             sender: senderUser._id,
         });
-        console.log(savedMessage);
         if (data.chatType === 'personal') {
             for (const [socketId, userId] of this.connectedUsers.entries()) {
                 const receiverId = savedMessage.receiver.toString();
@@ -134,7 +165,6 @@ let MessageGateway = class MessageGateway {
             client.emit('error', { message: 'Message not found or update failed' });
             return;
         }
-        console.log({ updatedMessage });
         this.server.emit('visibilityUpdated', {
             messageId: updatedMessage._id,
             visibility: updatedMessage.visibility,
@@ -146,6 +176,28 @@ let MessageGateway = class MessageGateway {
     }
 };
 exports.MessageGateway = MessageGateway;
+__decorate([
+    (0, websockets_1.SubscribeMessage)('getActiveUsers'),
+    __param(0, (0, websockets_1.ConnectedSocket)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [socket_io_1.Socket]),
+    __metadata("design:returntype", void 0)
+], MessageGateway.prototype, "handleGetActiveUsers", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('getActiveUsersCount'),
+    __param(0, (0, websockets_1.ConnectedSocket)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [socket_io_1.Socket]),
+    __metadata("design:returntype", void 0)
+], MessageGateway.prototype, "handleGetActiveUsersCount", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('checkUserOnline'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __param(1, (0, websockets_1.ConnectedSocket)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, socket_io_1.Socket]),
+    __metadata("design:returntype", void 0)
+], MessageGateway.prototype, "handleCheckUserOnline", null);
 __decorate([
     (0, websockets_1.SubscribeMessage)('sendMessage'),
     __param(0, (0, websockets_1.MessageBody)()),

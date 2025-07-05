@@ -171,6 +171,7 @@ export class GroupController {
   async remove(@Param('id') id: string) {
     const result = await this.groupService.remove(id);
     if (!result) return ResponseHelper.error('Group not deleted');
+    await this.messageService.deleteByAllInGroupId(id);
     return ResponseHelper.success(result, 'Group deleted successfully');
   }
 }

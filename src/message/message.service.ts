@@ -696,4 +696,10 @@ async getChatMessagesForAdmin(
   remove(id: string) {
     return this.messageModel.findByIdAndDelete(id);
   }
+
+  deleteByAllInGroupId(groupId: string) {
+    return this.messageModel.deleteMany({
+      receiver: new Types.ObjectId(groupId),
+    });
+  }
 }

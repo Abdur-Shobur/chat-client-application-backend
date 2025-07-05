@@ -171,7 +171,7 @@ export class MessageGateway
   //     console.log(`Client disconnected: ${socket.id} (userId: ${userId})`);
   //   this.connectedUsers.delete(socket.id);
   // }
-
+  /*
   @SubscribeMessage('sendMessage')
   async handleSendMessage(
     @MessageBody() data: CreateMessageDto,
@@ -253,6 +253,92 @@ export class MessageGateway
 
     client.emit('messageSent', savedMessage);
   }
+    
+
+  */
+
+  @SubscribeMessage('sendMessage')
+  async handleSendMessage(
+    @MessageBody() data: CreateMessageDto,
+    @ConnectedSocket() client: Socket,
+  ) {
+    const senderUser = client.data.user;
+    if (!senderUser) {
+      client.emit('unauthorized');
+      return;
+    }
+
+    const savedMessage = await this.messageService.create({
+      ...data,
+      sender: senderUser._id,
+    });
+
+    if (data.chatType === 'personal') {
+      // Personal chat: Send only to receiver
+      for (const [socketId, userId] of this.connectedUsers.entries()) {
+        const receiverId = savedMessage.receiver.toString();
+        if (userId.toString() === receiverId) {
+          client.to(socketId).emit('receiveMessage', savedMessage);
+        }
+      }
+    } else if (data.chatType === 'group') {
+      const isSenderAdmin = senderUser.role?.type === 'admin';
+      const groupMembers = await this.groupService.findOne(
+        savedMessage.receiver.toString(),
+      );
+      const groupMem = groupMembers.members as any[]; //{ _id: string }[]
+
+      for (const [socketId, user] of this.connectedUsersDetailed.entries()) {
+        if (user._id === senderUser._id) continue; // Skip sender (we'll emit to sender later)
+
+        const isUserAdmin = user.role?.type === 'admin';
+
+        const isGroupMember = groupMem.some(
+          (member) => member._id.toString() === user._id.toString(),
+        );
+
+        if (!isGroupMember) continue;
+
+        const replyToUserId =
+          typeof savedMessage.replyToUser === 'object' &&
+          savedMessage.replyToUser?._id?.toString();
+
+        const isTargetUser = replyToUserId === user._id.toString();
+        const isPublic = savedMessage.visibility === 'public';
+
+        // ✅ Admin public message → everyone gets it
+        if (isSenderAdmin && isPublic) {
+          client.to(socketId).emit('receiveMessage', savedMessage);
+          continue;
+        }
+
+        // ✅ Admin private reply → only to replyToUser + admins
+        if (isSenderAdmin && !isPublic) {
+          if (isUserAdmin || isTargetUser) {
+            client.to(socketId).emit('receiveMessage', savedMessage);
+          }
+          continue;
+        }
+
+        // ✅ User public message → all users
+        if (!isSenderAdmin && isPublic) {
+          client.to(socketId).emit('receiveMessage', savedMessage);
+          continue;
+        }
+
+        // ✅ User private reply → only to replyToUser + admins
+        if (!isSenderAdmin && !isPublic) {
+          if (isUserAdmin || isTargetUser) {
+            client.to(socketId).emit('receiveMessage', savedMessage);
+          }
+          continue;
+        }
+      }
+    }
+
+    // ✅ Send the actual savedMessage (with correct _id) to the sender too
+    client.emit('receiveMessage', savedMessage);
+  }
 
   @SubscribeMessage('toggleVisibility')
   async handleToggleVisibility(
@@ -286,5 +372,30 @@ export class MessageGateway
       messageId: updatedMessage._id,
       visibility: updatedMessage.visibility,
     });
+  }
+
+  @SubscribeMessage('deleteMessage')
+  async handleDeleteMessage(
+    @MessageBody() data: { messageId: string },
+    @ConnectedSocket() client: Socket,
+  ) {
+    const user = client.data.user;
+    if (!user) {
+      client.emit('unauthorized');
+      return;
+    }
+
+    // Delete the message
+    const deletedMessage = await this.messageService.remove(data.messageId);
+    if (!deletedMessage) {
+      client.emit('error', { message: 'Message not found or delete failed' });
+      return;
+    }
+
+    // Broadcast to all clients
+    this.server.emit('messageDeleted', { messageId: data.messageId });
+
+    // Optional: acknowledge the sender
+    client.emit('messageDeleteSuccess', { messageId: data.messageId });
   }
 }

@@ -677,9 +677,32 @@ async getChatMessagesForAdmin(
   }
 
   async toggleVisibility(messageId: string) {
-    const message = await this.messageModel.findById(messageId);
+    let message = await this.messageModel.findById(messageId).populate({
+      path: 'sender',
+      select: 'name role phone',
+      populate: {
+        path: 'role',
+        select: 'name type',
+      },
+    });
+
+    if (!message) {
+      throw new Error('Message not found');
+    }
+
     message.visibility = message.visibility === 'public' ? 'private' : 'public';
     await message.save();
+
+    //  Re-populate sender after save
+    await message.populate({
+      path: 'sender',
+      select: 'name role',
+      populate: {
+        path: 'role',
+        select: 'name type',
+      },
+    });
+
     return message;
   }
 

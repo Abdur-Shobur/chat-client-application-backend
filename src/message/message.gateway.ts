@@ -38,7 +38,6 @@ export class MessageGateway
   ) {}
 
   // Add these methods to your MessageGateway class
-
   @SubscribeMessage('getActiveUsers')
   handleGetActiveUsers(@ConnectedSocket() client: Socket) {
     const users = Array.from(this.connectedUsersDetailed.values()).map(
@@ -107,13 +106,6 @@ export class MessageGateway
 
     // Broadcast updated user list to all clients
     this.broadcastActiveUsers();
-  }
-
-  // Get active users count
-  @SubscribeMessage('getActiveUsersCount')
-  handleGetActiveUsersCount(@ConnectedSocket() client: Socket) {
-    const count = this.connectedUsersDetailed.size;
-    client.emit('activeUsersCount', count);
   }
 
   // Check if specific user is online
@@ -253,8 +245,6 @@ export class MessageGateway
 
     client.emit('messageSent', savedMessage);
   }
-    
-
   */
 
   @SubscribeMessage('sendMessage')
@@ -356,6 +346,8 @@ export class MessageGateway
     const updatedMessage = await this.messageService.toggleVisibility(
       data.messageId,
     );
+
+    console.log(updatedMessage);
     if (!updatedMessage) {
       client.emit('error', { message: 'Message not found or update failed' });
       return;
@@ -365,6 +357,9 @@ export class MessageGateway
     this.server.emit('visibilityUpdated', {
       messageId: updatedMessage._id,
       visibility: updatedMessage.visibility,
+      sender: updatedMessage.sender,
+      text: updatedMessage.text,
+      createdAt: updatedMessage.createdAt,
     });
 
     // ✅ Acknowledge back to sender

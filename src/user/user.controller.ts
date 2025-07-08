@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
   Patch,
   Post,
@@ -19,6 +21,8 @@ import { Role, Roles } from 'src/role/decorator';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateStatusDto } from './dto/update-status.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @UseGuards(AuthGuard)
 @Controller('user')
@@ -95,6 +99,43 @@ export class UserController {
     const result = await this.userService.update(id, updateUserDto);
     if (!result) return ResponseHelper.error('User not updated');
     return ResponseHelper.success(result, 'User updated successfully');
+  }
+
+  @Put('profile')
+  async updateProfile(@Req() req, @Body() dto: UpdateProfileDto) {
+    try {
+      const updatedUser = await this.userService.updateProfile(
+        req.user._id,
+        dto,
+      );
+      delete updatedUser.password;
+      return ResponseHelper.success(
+        updatedUser,
+        'Profile updated successfully',
+      );
+    } catch (err) {
+      throw new HttpException(
+        ResponseHelper.error(err.message),
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  @Put('password')
+  async updatePassword(@Req() req, @Body() dto: UpdatePasswordDto) {
+    try {
+      await this.userService.updatePassword(
+        req.user._id,
+        dto.currentPassword,
+        dto.newPassword,
+      );
+      return ResponseHelper.success(null, 'Password updated successfully');
+    } catch (err) {
+      throw new HttpException(
+        ResponseHelper.error(err.message),
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   /**

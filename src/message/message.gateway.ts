@@ -347,7 +347,6 @@ export class MessageGateway
       data.messageId,
     );
 
-    console.log(updatedMessage);
     if (!updatedMessage) {
       client.emit('error', { message: 'Message not found or update failed' });
       return;

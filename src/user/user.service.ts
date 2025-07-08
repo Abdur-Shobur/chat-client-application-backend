@@ -5,10 +5,15 @@ import { Model } from 'mongoose';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { IUserStatus } from './interfaces/user.interfaces';
+import * as bcrypt from 'bcrypt';
+import { CustomConfigService } from 'src/config';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private UserModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) private UserModel: Model<UserDocument>,
+    private readonly config: CustomConfigService,
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
     const result = (await this.UserModel.create(createUserDto)).toJSON();
@@ -131,6 +136,55 @@ export class UserService {
         },
       })
       .exec();
+  }
+
+  async updateProfile(userId: string, data: Partial<User>) {
+    // Check for duplicate email
+    if (data.email) {
+      const emailExists = await this.UserModel.findOne({
+        email: data.email,
+        _id: { $ne: userId },
+      });
+      if (emailExists) throw new Error('Email already in use');
+    }
+
+    // Check for duplicate phone
+    if (data.phone) {
+      const phoneExists = await this.UserModel.findOne({
+        phone: data.phone,
+        _id: { $ne: userId },
+      });
+      if (phoneExists) throw new Error('Phone number already in use');
+    }
+
+    return this.UserModel.findByIdAndUpdate(userId, data, {
+      new: true,
+      runValidators: true,
+    });
+  }
+
+  async updatePassword(
+    userId: string,
+    currentPassword: string,
+    newPassword: string,
+  ) {
+    const user = await this.UserModel.findById(userId).select('+password');
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      throw new Error('Current password is incorrect');
+    }
+
+    const hashedPassword = await bcrypt.hash(
+      newPassword,
+      Number(this.config.hashSalt), // same as your register logic
+    );
+
+    user.password = hashedPassword;
+    await user.save();
   }
 
   // delete user by id
